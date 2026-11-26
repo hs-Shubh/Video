@@ -63,8 +63,23 @@ Source: `reel/` (HyperFrames project, generated) and `build/` (generators and ch
 
 ## Gate results
 
-GATES_TABLE
+| Gate | Result | Evidence |
+|---|---|---|
+| G1 hook | Pass | Frame 0 shows the Edits and Resolve windows, the host and the first caption (`Maine`); the prompt bar types `edit my reel` from 0.35 s |
+| G2 timing | Pass on measured words, 2 outliers | Final mix re-transcribed: 51 of 53 English anchor words start within 3 frames of their caption word (mean 0.54 frames, max 7.2 frames on 2 words). The other caption words are spread by length between anchors, so they cannot be measured one by one |
+| G3 lip sync | Pass | 672 Rhubarb mouth cues; every cue inside a measured silence forced to rest (X) |
+| G4 real proof | Not applicable, by your change | No recordings: all screens are labelled recreations. Every command and menu name matches the brief exactly |
+| G5 facts | Pass | All 35 overlay strings checked against the section 3b text by script; claims are only those in section 2 |
+| G6 clarity | Pass | Every overlay holds to the end of its beat (at least 1 s after its trigger word); commands wrap, never cut off |
+| G7 glass | Pass | At most two glass cards at once (B03, B11); no backdrop-filter anywhere; no glow or neon |
+| G8 privacy | Pass | OCR of all 447 2x frames of S06 and S07: 0 token-like strings; `token hidden` placeholder seen in 312 frames |
+| G9 frames | Pass | 2 frames each side of all 16 cuts: no blank frames (lowest contrast 22.3, blank is under 12), no single-frame flashes. Earlier render failed (stray tick row, stray icon), fixed |
+| G10 brand | Pass | Navy #0E1422, one saffron accent #FF9F1C, green only for connected and done, red only for errors, Poppins ExtraBold and JetBrains Mono, code-made sting at the start and at the end |
+| G11 audio | Pass, with one note | -14.0 LUFS integrated, true peak -1.9 dBTP, 48 kHz, short-term (3 s) between -17.5 and -11.9 LUFS, 9 sound moments only. Note: loudness range 3.0 LU, under the 4 to 7 LU target (see choice 18) |
+| G12 loop | Pass | Last frame against frame 0: PSNR 48.5 dB, only 22 of 2,073,600 pixels differ by more than 20 levels (sub-pixel grid drift and compression). The sting fades in over 4 ms and the mix fades out, so there is no click at the loop. Earlier render failed (3 px head offset), fixed |
+| G13 text | Pass | No em or en dashes in any caption, overlay, code file, srt or report (scripted scan) |
+| G14 length | Pass | 103.07 s (95 to 140 s). Teaser 30.4 s |
 
 ## Privacy scan
 
-PRIVACY_LINE
+Passed on the final render. 447 frames of S06 and S07 at 2160 x 3840 were OCR scanned with tesseract. No token, key or long secret-like string was found. The Access Token row only ever shows the solid `token hidden` mask, and the pasted command in B07 is only the mask. No real names, emails or paths: the demo paths are `~/Footage/day1` and `~/Exports`. Result file: `build/privacy_scan.json`.

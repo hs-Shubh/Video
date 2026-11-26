@@ -1,5 +1,5 @@
 {
- "voice_transcript_similarity_to_source": 0.017,
+ "voice_transcript_similarity_to_source": 0.649,
  "anchors_compared": 53,
  "max_offset_frames": 7.2,
  "mean_offset_frames": 0.54,
