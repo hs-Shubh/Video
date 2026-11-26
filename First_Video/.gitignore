@@ -1,0 +1,20 @@
+# renders and large or regenerable media
+renders/
+build/render/
+build/ocr_frames/
+build/cutframes/
+build/look/
+build/stills*/
+build/cover_proj/
+build/*.wav
+build/*.png
+build/*.log
+build/ffmpeg2pass*
+voice/*.wav
+voice/*.mp3
+reel/assets/audio/
+reel/assets/music/*.wav
+reel/assets/sfx/*.wav
+reel/.hyperframes/
+reel/node_modules/
+__pycache__/

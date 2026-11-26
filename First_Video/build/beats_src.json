@@ -1,0 +1,18 @@
+[
+["B01","Hook","Maine Claude ko **Instagram Edits** aur **DaVinci Resolve** se jod diya. Ab edit **bolkar** hota hai."],
+["B02","Proof","Dekho: **ek prompt**, aur **clips, subtitles, music**, sab timeline pe lag gaye."],
+["B03","Problem","Par log yahin **atakte** hain. Edits sirf **Apple silicon** Mac pe chalta hai, aur **free Resolve** mein Blackmagic bahar se control **band** rakhta hai."],
+["B04","Roadmap","Pehle **Edits.** Phir **Resolve.** Phir dono **ek saath.**"],
+["B05","Step","**Edits 1.** Instagram ki site se Mac ke liye Edits **download** karo, aur apne Instagram se **sign in** karo."],
+["B06","Step","**Edits 2.** **Settings** kholo, **Automation** pe jao, aur **Enable Automation Server** on karo. Wahin Claude Code ke liye **Copy** dikhega."],
+["B07","Step","**Edits 3.** Copy dabao, **Terminal** mein paste karke Enter. Phir Claude Desktop **poora band** karke dobara kholo."],
+["B08","Step","**Edits 4.** Claude se poochho: Edits ke **tools** kya hain? List aa gayi, toh **connected.**"],
+["B09","Step","Ab **Resolve.** Free edition mein **bridge andar se** chalta hai. Claude Code mein **teen commands** paste karo, phir Resolve ek baar **restart** karo."],
+["B10","Step","Phir **Workspace, Scripts, Claude MCP Bridge** pe ek click. **/mcp** mein **davinci connected** dikhega."],
+["B11","Payoff","Ab **dono ek saath.** Bolo: Resolve mein is folder ke clips **import** karo, **timeline** banao, **render** karo. Phir bolo: Edits mein is render se **vertical reel** banao, **subtitles** aur **music** ke saath."],
+["B12","Result","Reel timeline pe **taiyaar.** Haath se **tweak** karo, aur seedha **post** karo."],
+["B13","Fix 1","Atak gaye? **Teen fix.** **Ek:** Claude ko Edits ke tools nahi dikh rahe? Claude Desktop **poora band** karke dobara kholo."],
+["B14","Fix 2","**Do:** bridge is not running? Resolve mein **project kholo** aur bridge **dobara click** karo."],
+["B15","Fix 3","**Teen:** Claude atak gaya? Resolve mein koi **popup** khula hoga. Use **band** karo."],
+["B16","CTA","Poora **guide** chahiye? Comment karo **EDIT.** Commands **DM** mein aa jayenge. Aur yeh reel **Claude ne banayi** hai."]
+]
