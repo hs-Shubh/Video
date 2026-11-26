@@ -119,7 +119,7 @@ gsap.set("#s07-wT, #s07-wC",{opacity:0});
 gsap.set("#s07-cur",{x:640,y:375,opacity:1});
 cursorTo("s07-cur",38.030,580,295,0.35); clickAt("s07-rip",38.430,580,295);
 tl.to("#s07-copy",{scale:0.9,duration:0.08,yoyo:true,repeat:1},L(38.430));
-tl.fromTo("#s07-fly",{x:632,y:444,opacity:1,scale:1},{x:434,y:360,scale:0.8,duration:0.55,ease:"power2.inOut"},L(38.580));
+tl.fromTo("#s07-fly",{x:632,y:444,opacity:1,scale:1},{x:434,y:360,scale:0.8,duration:0.55,ease:"power2.inOut",immediateRender:false},L(38.580));
 tl.to("#s07-fly",{opacity:0,duration:0.1},L(39.130));
 tl.fromTo("#s07-wT",{opacity:0,scale:0.94},{opacity:1,scale:1,duration:0.25,ease:"back.out(1.6)"},L(39.310));
 tl.to("#s07-wS",{opacity:0.4,duration:0.2},L(39.310));

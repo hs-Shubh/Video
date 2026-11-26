@@ -35,7 +35,7 @@ if step in ("all", "encode"):
     run(f'ffmpeg -y -loglevel error -i "{SRC}" -i "{MIX}" -map 0:v -map 1:a -vf {SCALE} {ENC} {AUD} -t {TOTAL} "{OUT}/EDITS_RESOLVE_9x16.mp4"')
     run(f'ffmpeg -y -loglevel error -i "{SRC}" -i "{NOM}" -map 0:v -map 1:a -vf {SCALE} {ENC} {AUD} -t {TOTAL} "{OUT}/EDITS_RESOLVE_nomusic.mp4"')
     # phone copy: two pass, sized for under 30 MB
-    vb = int((27.5 * 8 * 1024 * 1024 / TOTAL - 160_000) / 1000)
+    vb = min(1600, int((27.5 * 8 * 1024 * 1024 / TOTAL - 160_000) / 1000))
     os.chdir(B)
     run(f'ffmpeg -y -loglevel error -i "{OUT}/EDITS_RESOLVE_9x16.mp4" -c:v libx264 -preset slow -b:v {vb}k -pass 1 -an -f null /dev/null')
     run(f'ffmpeg -y -loglevel error -i "{OUT}/EDITS_RESOLVE_9x16.mp4" -c:v libx264 -preset slow -b:v {vb}k -pass 2 -pix_fmt yuv420p -c:a aac -b:a 160k -ar 48000 -movflags +faststart "{OUT}/EDITS_RESOLVE_phone.mp4"')

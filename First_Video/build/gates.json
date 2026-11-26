@@ -1,0 +1,80 @@
+{
+ "G14_length_s": 103.07,
+ "G11_I_LUFS": -14.0,
+ "G11_LRA": 3.0,
+ "G11_TP_dBFS": -1.9,
+ "G11_short_term_range": [
+  -17.5,
+  -11.9
+ ],
+ "G12_loop_psnr_db": 39.15,
+ "frames": 3092,
+ "G9_bad_cut_frames": [],
+ "G9_min_std_at_cuts": [
+  [
+   "B01",
+   30.1
+  ],
+  [
+   "B02",
+   25.1
+  ],
+  [
+   "B03",
+   33.8
+  ],
+  [
+   "B04",
+   28.3
+  ],
+  [
+   "B05",
+   31.1
+  ],
+  [
+   "B06",
+   37.4
+  ],
+  [
+   "B07",
+   23.9
+  ],
+  [
+   "B08",
+   22.3
+  ],
+  [
+   "B09",
+   27.4
+  ],
+  [
+   "B10",
+   33.9
+  ],
+  [
+   "B11",
+   22.8
+  ],
+  [
+   "B12",
+   41.0
+  ],
+  [
+   "B13",
+   28.2
+  ],
+  [
+   "B14",
+   22.7
+  ],
+  [
+   "B15",
+   28.6
+  ],
+  [
+   "B16",
+   37.8
+  ]
+ ],
+ "G9_method": "frames cut-2..cut+2 at every shot change: blank if luminance std < 12, flash if a frame differs from both neighbours while they match"
+}

@@ -19,3 +19,6 @@ reel/.hyperframes/
 reel/node_modules/
 __pycache__/
 build/cover_snap/
+build/fixcheck/
+build/cut_sheet.jpg
+build/*.log

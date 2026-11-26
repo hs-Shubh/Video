@@ -124,7 +124,7 @@ gsap.set("#s16r-viewimg",{opacity:1});
 gsap.set("#s16-cur",{x:700,y:470,opacity:0});
 gsap.set("#s16-cb",{opacity:0}); enter("#s16-cb",97.490); typeText("#s16-ct","EDIT",97.640,9);
 tl.to("#s16-snd",{scale:0.85,duration:0.08,yoyo:true,repeat:1},L(98.690));
-tl.fromTo("#s16-plane",{x:866,y:1026,opacity:1,rotation:0},{x:826,y:880,opacity:0,rotation:-20,duration:0.6,ease:"power2.in"},L(98.740));
+tl.fromTo("#s16-plane",{x:866,y:1026,opacity:1,rotation:0},{x:826,y:880,opacity:0,rotation:-20,duration:0.6,ease:"power2.in",immediateRender:false},L(98.740));
 gsap.set("#s16-dm",{opacity:0});
 enter("#s16-dm",99.090);
 leave("#s16-dm",102.443);

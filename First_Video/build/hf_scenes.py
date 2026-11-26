@@ -382,7 +382,7 @@ def s07(c):
     c.js(f'tl.to("#{p}-copy",{{scale:0.9,duration:0.08,yoyo:true,repeat:1}},L({tcp:.3f}));')
     # the copied command flies to the Terminal as a small chip (no text, never the token)
     c.add(f'<div class="abs" id="{p}-fly" style="left:0;top:0;width:44px;height:30px;border-radius:8px;background:#FF9F1C;display:flex;align-items:center;justify-content:center;opacity:0;z-index:45">{icon("copy", 18, "#0E1422", 2.4)}</div>')
-    c.js(f'tl.fromTo("#{p}-fly",{{x:{74 + cx - 22},y:{164 + cy - 15},opacity:1,scale:1}},{{x:{74 + 360},y:{164 + 196},scale:0.8,duration:0.55,ease:"power2.inOut"}},L({tcp + 0.15:.3f}));')
+    c.js(f'tl.fromTo("#{p}-fly",{{x:{74 + cx - 22},y:{164 + cy - 15},opacity:1,scale:1}},{{x:{74 + 360},y:{164 + 196},scale:0.8,duration:0.55,ease:"power2.inOut",immediateRender:false}},L({tcp + 0.15:.3f}));')
     c.js(f'tl.to("#{p}-fly",{{opacity:0,duration:0.1}},L({tcp + 0.7:.3f}));')
     c.js(f'tl.fromTo("#{p}-wT",{{opacity:0,scale:0.94}},{{opacity:1,scale:1,duration:0.25,ease:"back.out(1.6)"}},L({tte:.3f}));')
     c.js(f'tl.to("#{p}-wS",{{opacity:0.4,duration:0.2}},L({tte:.3f}));')
@@ -669,9 +669,9 @@ def fix_card(c, n, front, back, t_front, t_flip):
           f'<div class="glass" id="{p}-fb" style="{face}{c.glass_style(x, y)};opacity:0">'
           f'<div class="abs" style="left:34px;top:30px">{icon("check", 46, "#2FD27A", 3)}</div>'
           f'<div style="font:800 50px/1.14 Poppins, sans-serif">{back}</div></div>'
-          f'<div class="abs" style="right:30px;top:26px;display:flex;gap:10px">{ticks}</div></div>')
+          f'<div class="abs" id="{p}-tks" style="right:30px;top:26px;display:flex;gap:10px;opacity:0">{ticks}</div></div>')
     c.js(f'tl.set("#{p}-ff",{{opacity:0}},0);')
-    c.js(f'enter("#{p}-ff",{t_front:.3f});')
+    c.js(f'enter("#{p}-ff",{t_front:.3f}); enter("#{p}-tks",{t_front:.3f});')
     c.js(f'tl.to("#{p}-ff",{{rotationY:90,transformPerspective:1200,duration:6*F,ease:"power1.in"}},L({t_flip:.3f}));')
     c.js(f'tl.set("#{p}-ff",{{opacity:0}},L({t_flip + 6 * F:.3f}));')
     c.js(f'tl.fromTo("#{p}-fb",{{opacity:1,rotationY:-90,transformPerspective:1200}},{{rotationY:0,duration:6*F,ease:"power1.out",immediateRender:false}},L({t_flip + 6 * F:.3f}));')
@@ -755,7 +755,7 @@ def s16(c, total):
     c.js(f'tl.to("#{p}-snd",{{scale:0.85,duration:0.08,yoyo:true,repeat:1}},L({tdm - 0.4:.3f}));')
     # DM paper plane flies out of the comment box
     c.add(f'<div class="abs" id="{p}-plane" style="left:0;top:0;opacity:0;z-index:50">{icon("send", 56, "#FF9F1C", 2.4)}</div>')
-    c.js(f'tl.fromTo("#{p}-plane",{{x:{x + 560},y:{y + 26},opacity:1,rotation:0}},{{x:{x + 520},y:880,opacity:0,rotation:-20,duration:0.6,ease:"power2.in"}},L({tdm - 0.35:.3f}));')
+    c.js(f'tl.fromTo("#{p}-plane",{{x:{x + 560},y:{y + 26},opacity:1,rotation:0}},{{x:{x + 520},y:880,opacity:0,rotation:-20,duration:0.6,ease:"power2.in",immediateRender:false}},L({tdm - 0.35:.3f}));')
     c.chip(f"{p}-dm", "Guide in your DM", "send", 0, 826, tdm, out=tend, center_row=True)
     c.chip(f"{p}-mw", "Made with Claude", "spark", 430, 1150, tcl, out=tend)
     c.js(f'leave("#{p}-cb",{tend:.3f});')
