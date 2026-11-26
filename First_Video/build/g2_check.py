@@ -19,7 +19,7 @@ for a,b in zip(cuts,cuts[1:]):
         else: cur['w']+=t
     if cur: W.append(cur)
 orig=" ".join(s['text'] for s in json.load(open('asr_parakeet.json')))
-sim=SequenceMatcher(None,orig.lower(),(" ".join(text)).lower()).ratio()
+sim=SequenceMatcher(None,orig.lower().split(),(" ".join(text)).lower().split(),autojunk=False).ratio()
 ANCH={'edits','resolve','claude','terminal','settings','automation','bridge','mcp','popup','edit','instagram','copy','download','workspace','scripts','connected','timeline','subtitles','music','commands','render'}
 diffs=[]
 for w in T['words']:

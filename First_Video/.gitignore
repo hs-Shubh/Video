@@ -22,3 +22,5 @@ build/cover_snap/
 build/fixcheck/
 build/cut_sheet.jpg
 build/*.log
+build/loop*.png
+build/loopcmp.jpg

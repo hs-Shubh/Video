@@ -251,18 +251,18 @@ for t, pose in acts:
     if pose == "fist":
         hj.append(f'tl.to("#h-R-up",{{rotation:-140,duration:0.14,yoyo:true,repeat:3,ease:"steps(2)"}},{t + 0.4:.3f});')
     if pose == "shrug":
-        hj.append(f'tl.to("#h-head",{{rotation:-6,duration:0.2,yoyo:true,repeat:1}},{t:.3f});')
+        hj.append(f'tl.fromTo("#h-head",{{rotation:0}},{{rotation:-6,duration:0.2,yoyo:true,repeat:1,immediateRender:false}},{t:.3f});')
     first = False
 # nods during B11
 for tn in (ctx.word("B11", "render", 1), ctx.word("B11", "music")):
-    hj.append(f'tl.to("#h-head",{{rotation:5,y:4,duration:0.14,yoyo:true,repeat:1}},{tn:.3f});')
+    hj.append(f'tl.fromTo("#h-head",{{rotation:0,y:0}},{{rotation:5,y:4,duration:0.14,yoyo:true,repeat:1,immediateRender:false}},{tn:.3f});')
 # steps back in B11 (scale 0.93, stays over 380 px tall)
 hj.append(f'tl.to("#h-wrap",{{scale:0.93,x:-16,duration:0.4,ease:"power2.inOut"}},{BEATS["B11"]["start"]:.3f});')
 hj.append(f'tl.to("#h-wrap",{{scale:1,x:0,duration:0.4,ease:"power2.inOut"}},{cuts["B12"]:.3f});')
 # head bob on saffron words
 for w in WORDS:
     if w["hl"] and w["t0"] > 0.5:
-        hj.append(f'tl.to("#h-head",{{y:-5,duration:0.09,yoyo:true,repeat:1,ease:"power1.out"}},{w["t0"]:.3f});')
+        hj.append(f'tl.fromTo("#h-head",{{y:0}},{{y:-5,duration:0.09,yoyo:true,repeat:1,ease:"power1.out",immediateRender:false}},{w["t0"]:.3f});')
 # seeded blinks every 3 to 5 s, none near the loop frames
 rnd = random.Random(42)
 t = 1.6
@@ -277,6 +277,8 @@ for a, b, v in cues:
         prev = v
 if prev != "X":
     hj.append(f'tl.set("#h-m{prev}",{{opacity:0}},{TOTAL - 0.9:.3f}); tl.set("#h-mX",{{opacity:1}},{TOTAL - 0.9:.3f});')
+# the loop: back to the exact frame 0 pose
+hj.append(f'tl.set("#h-head",{{x:0,y:0,rotation:0}},{TOTAL - 0.62:.3f}); tl.set("#h-eyes",{{scaleY:1}},{TOTAL - 0.62:.3f}); tl.set("#h-wrap",{{x:0,y:0,scale:1}},{TOTAL - 0.62:.3f});')
 hj.append(f'tl.set({{}},{{}},{TOTAL - 0.01:.3f});')
 hj.append('window.__timelines["host"] = tl;')
 host_html = ("<template>\n<style>#root{position:absolute;inset:0;overflow:hidden}.abs{position:absolute}</style>\n"
