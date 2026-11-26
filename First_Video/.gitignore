@@ -18,3 +18,4 @@ reel/assets/sfx/*.wav
 reel/.hyperframes/
 reel/node_modules/
 __pycache__/
+build/cover_snap/
