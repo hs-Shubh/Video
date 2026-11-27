@@ -7,8 +7,8 @@
   -17.5,
   -11.9
  ],
- "G12_loop_psnr_db": 48.37,
+ "G12_loop_psnr_db": 48.72,
  "frames": 3092,
  "G9_bad_cut_frames": [],
- "G12_pixels_diff_over_20": 45
+ "G12_pixels_diff_over_20": 33
 }

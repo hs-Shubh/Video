@@ -12,6 +12,20 @@
 
 Change from the brief, by your instruction: no screen recordings were supplied. Every screen is a stylised, generic recreation in HTML and CSS (MacBook frame, macOS style desktop, Terminal, Claude Desktop and Claude Code, an Edits style editor, a Resolve style workspace). No official logos or trademarked artwork. The Access Token only ever appears as the placeholder `token hidden` on a solid mask.
 
+## Version 3 (27 Nov): retention edit from the reference reel research
+
+Built from the creator's research doc on 5 reference reels. Those reels change the picture every 1.5 to 2.5 s and keep the host in a supporting role. The voice, story, captions and overlay sheet are unchanged.
+
+- **Big proof panel:** the laptop frame is gone. The app UI fills the top of the frame (1032 x 850 px), so it is far more readable on a phone.
+- **Camera cuts:** a virtual camera hard-cuts between wide and close framings about every 2 s, between the existing click zooms. Click zooms hold at least 1.5 s, as the brief asks.
+- **Host demoted:** the host enters at about 2.8 s and is on screen only in the hook, proof, roadmap, together, payoff and call to action beats. It vanishes in the problem, the 6 setup steps and the 3 fixes, so the UI takes over.
+- **Hook:** "EDIT BOLKAR" (the spoken words) is on screen from frame 0 over a darkened proof panel, with motion from the first frame. Then fast camera cuts through Edits and Resolve, and the title with the icon orbit. The loop ending rebuilds the same frame 0.
+- **Measured rhythm** (scene change detector on the proof panel):
+  - Before: 5 big changes in 103 s.
+  - Now: 43 changes, on average every 2.3 s.
+  - The detector misses some dark-on-dark reframes. A frame check of the 37.7 to 51.5 s stretch shows changes every 1 to 2 s.
+- **Cover:** the host is shown on the cover even though it is hidden in that beat of the reel.
+
 ## Version 2 (27 Nov): real Edits footage, redrawn Resolve, more animation
 
 - **Real Edits captures from the creator** replace the recreated Edits screens:
@@ -82,7 +96,7 @@ Source: `reel/` (HyperFrames project, generated) and `build/` (generators and ch
 
 | Gate | Result | Evidence |
 |---|---|---|
-| G1 hook | Pass | Frame 0 shows the Edits and Resolve windows, the host and the first caption (`Maine`); the prompt bar types `edit my reel` from 0.35 s |
+| G1 hook | Pass, adjusted to the research | Frame 0 shows the hook words EDIT BOLKAR over the Edits and Resolve windows, plus the first caption. The host enters at 2.8 s, inside the first 3 s, as the research doc asks |
 | G2 timing | Pass on measured words, 2 outliers | Final mix re-transcribed: 51 of 53 English anchor words start within 3 frames of their caption word (mean 0.54 frames, max 7.2 frames on 2 words). The other caption words are spread by length between anchors, so they cannot be measured one by one |
 | G3 lip sync | Pass | 672 Rhubarb mouth cues; every cue inside a measured silence forced to rest (X) |
 | G4 real proof | Partial | Real Edits footage for B05 to B07 and the desktop. The Edits demo (B02, B11, B12), Resolve, Terminal and Claude are recreations, because no working Edits demo or Resolve recording was supplied. Every command and menu name matches the brief exactly |
@@ -93,7 +107,7 @@ Source: `reel/` (HyperFrames project, generated) and `build/` (generators and ch
 | G9 frames | Pass | 2 frames each side of all 16 cuts: no blank frames (lowest contrast 22.3, blank is under 12), no single-frame flashes. Earlier render failed (stray tick row, stray icon), fixed |
 | G10 brand | Pass | Navy #0E1422, one saffron accent #FF9F1C, green only for connected and done, red only for errors, Poppins ExtraBold and JetBrains Mono, code-made sting at the start and at the end |
 | G11 audio | Pass, with one note | -14.0 LUFS integrated, true peak -1.9 dBTP, 48 kHz, short-term (3 s) between -17.5 and -11.9 LUFS, 9 sound moments only. Note: loudness range 3.0 LU, under the 4 to 7 LU target (see choice 18) |
-| G12 loop | Pass | Last frame against frame 0: PSNR 48.8 dB, only 18 of 2,073,600 pixels differ by more than 20 levels (sub-pixel grid drift and compression). The sting fades in over 4 ms and the mix fades out, so there is no click at the loop. Earlier render failed (3 px head offset), fixed |
+| G12 loop | Pass | Last frame against frame 0: PSNR 48.7 dB, only 33 of 2,073,600 pixels differ by more than 20 levels (sub-pixel grid drift and compression). The sting fades in over 4 ms and the mix fades out, so there is no click at the loop. Earlier render failed (3 px head offset), fixed |
 | G13 text | Pass | No em or en dashes in any caption, overlay, code file, srt or report (scripted scan) |
 | G14 length | Pass | 103.07 s (95 to 140 s). Teaser 30.4 s |
 
