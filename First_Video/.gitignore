@@ -24,3 +24,7 @@ build/cut_sheet.jpg
 build/*.log
 build/loop*.png
 build/loopcmp.jpg
+reel/assets/footage/
+build/v2/
+build/v3/
+build/token_mask.png

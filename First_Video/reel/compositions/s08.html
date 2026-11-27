@@ -35,13 +35,15 @@
 .ripple{position:absolute;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:22px;border:3px solid #fff;opacity:0;z-index:49}
 .mono{font-family:"JetBrains Mono", monospace}
 /* overlays */
-.glass{position:absolute;border-radius:36px;
+.glass{position:absolute;border-radius:36px;overflow:hidden;
   background-image:url(assets/img/noise.png),linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),url(assets/img/desk_blur.png);
   background-size:256px 256px,auto,1080px 1920px;
   box-shadow:0 2px 6px rgba(0,0,0,.35),0 24px 60px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.22)}
 .glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
   border-top:1px solid rgba(255,255,255,.55);border-left:1px solid rgba(255,255,255,.3);
   -webkit-mask:linear-gradient(135deg,#000 0%,rgba(0,0,0,0) 45%);mask:linear-gradient(135deg,#000 0%,rgba(0,0,0,0) 45%)}
+.sheen{position:absolute;top:-20%;left:0;width:38%;height:140%;pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.10),rgba(255,255,255,0));transform:skewX(-18deg) translateX(-160%)}
 .chip{position:absolute;display:flex;align-items:center;gap:16px;height:68px;padding:0 28px 0 22px;border-radius:34px;
   font:500 35px/1 Poppins, sans-serif;color:#fff;white-space:nowrap}
 .chip .ic{flex:none}
@@ -83,7 +85,7 @@
 <div class="laptop-base"></div><div class="laptop-notch"></div><div class="laptop-lid"></div><div class="laptop-cam"></div>
 <div class="screen" id="s08-screen" data-layout-ignore><div class="push" id="s08-push"><div class="zoom" id="s08-zoom"><div class="wall"></div><div class="menubar"><div class="mb-dot"></div><span>Claude</span><div class="mb-bar" style="width:34px"></div><div class="mb-bar" style="width:30px"></div><div class="mb-bar" style="width:40px"></div><div class="mb-bar" style="width:28px"></div><div style="flex:1"></div><div class="mb-bar" style="width:22px"></div><div class="mb-bar" style="width:46px"></div></div><div class="win" id="s08-wC" style="left:8px;top:30px;width:916px;height:544px;background:#262624;"><div class="tbar"><div class="tl-dot"></div><div class="tl-dot"></div><div class="tl-dot"></div></div><div class="ttitle">Claude</div><div class="wbody"><div style="position:absolute;left:0;top:0;bottom:0;width:58px;background:#1f1e1c;border-right:1px solid rgba(255,255,255,.06)"><div style="width:22px;height:22px;border-radius:6px;margin:14px 18px;background:rgba(255,255,255,.12)"></div><div style="width:22px;height:22px;border-radius:6px;margin:14px 18px;background:rgba(255,255,255,.12)"></div><div style="width:22px;height:22px;border-radius:6px;margin:14px 18px;background:rgba(255,255,255,.12)"></div><div style="width:22px;height:22px;border-radius:6px;margin:14px 18px;background:rgba(255,255,255,.12)"></div></div><div id="s08c-msgs" style="position:absolute;left:58px;right:0;top:0;bottom:70px;padding:18px 40px;font:500 15px/1.45 Inter, sans-serif;color:#ece9e2"></div><div style="position:absolute;left:98px;right:40px;bottom:16px;height:44px;border-radius:12px;background:#33312d;border:1px solid rgba(255,255,255,.1)"><div id="s08c-input" style="position:absolute;left:14px;right:40px;top:12px;font:500 14px Inter, sans-serif;color:#ece9e2;white-space:nowrap;overflow:hidden"></div><div style="position:absolute;right:8px;top:8px;width:28px;height:28px;border-radius:8px;background:#5a564f;display:flex;align-items:center;justify-content:center"><svg class="ic"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ece9e2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3L10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg></div></div></div></div><div class="ripple" id="s08-rip"></div><svg id="s08-cur" class="cursor" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 28 L16 26.3 L12 17 L20 17 Z" fill="#fff" stroke="#0a0d14" stroke-width="1.6" stroke-linejoin="round"/></svg></div></div></div>
 <div class="badge" id="s08-bd" style="left:40px;top:124px">E4</div>
-<div class="monobox glass" id="s08-tb" style="left:306px;top:968px;width:644px;background-position:0 0,0 0,-306px -968px;"><span id="s08-tbt"></span><span class="caret"></span></div>
+<div class="monobox glass" id="s08-tb" style="left:306px;top:968px;width:644px;background-position:0 0,0 0,-306px -968px;"><i class="sheen"></i><span id="s08-tbt"></span><span class="caret"></span></div>
 <div class="abs" style="left:60px;width:960px;top:830px;display:flex;justify-content:center"><div class="pill ok" id="s08-ok" style="position:relative"><svg class="ic"  width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#07210f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Edits connected</span></div></div>
 </div>
 <script>
@@ -93,7 +95,10 @@ const S0 = 44.6000;
 const F = 1/30;
 const L = t => Math.max(0, +(t - S0).toFixed(4));
 const tl = gsap.timeline({ paused: true });
-function enter(sel, t, dy){ tl.fromTo(sel,{opacity:0,y:(dy===undefined?24:dy)},{opacity:1,y:0,duration:10*F,ease:"power3.out"},L(t)); }
+function enter(sel, t, dy){
+  tl.fromTo(sel,{opacity:0,y:(dy===undefined?24:dy),rotationX:12,transformPerspective:900,transformOrigin:"50% 100%"},{opacity:1,y:0,rotationX:0,duration:12*F,ease:"power3.out"},L(t));
+  document.querySelectorAll(sel).forEach(el=>{ const sh=el.querySelector(":scope > .sheen"); if(sh) tl.fromTo(sh,{xPercent:-160},{xPercent:360,duration:0.8,ease:"power2.inOut",immediateRender:false},L(t)+0.18); });
+}
 function leave(sel, t){ tl.to(sel,{opacity:0,duration:6*F,ease:"none"},L(t)); }
 function popIn(sel, t, s){ tl.fromTo(sel,{opacity:0,scale:(s||0.55)},{opacity:1,scale:1,duration:9*F,ease:"back.out(2.4)"},L(t)); }
 function show(sel, t){ tl.set(sel,{opacity:1},L(t)); }

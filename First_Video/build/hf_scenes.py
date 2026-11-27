@@ -85,6 +85,7 @@ class Sc:
         self.js(f'tl.set("#{self.p}-cur",{{x:{x},y:{y},opacity:{0 if hidden else 1}}},0);')
 
     def html(self):
+        self.m = [_re.sub(r'(<div[^>]*class="[^"]*\bglass\b[^"]*"[^>]*>)', r'\1<i class="sheen"></i>', x) for x in self.m]
         return ("<template>\n<style>" + CSS + "</style>\n"
                 f'<div id="root" data-composition-id="{self.id}" data-width="1080" data-height="1920">\n'
                 + "\n".join(self.m) + "\n</div>\n<script>\n(function(){\n"
@@ -764,3 +765,175 @@ def s16(c, total):
     c.add(prompt_bar(p))
     c.js(f'tl.set("#{p}-pb",{{opacity:0}},0); enter("#{p}-pb",{tend + 0.1:.3f},0);')
     c.js(f'tl.set("#{p}-pb",{{opacity:1,y:0}},L({tend + 0.45:.3f}));')
+
+
+# =====================================================================================
+# Real Edits captures (masked copies in reel/assets/footage) replace the recreated Edits screens.
+# =====================================================================================
+FT = "assets/footage/"
+# Settings window: 1600 x 1254 recording shown at 689 x 540 inside the screen
+SET_X, SET_Y, SET_K = 121, 32, 689 / 1600
+
+
+def set_pt(x, y):
+    return SET_X + x * SET_K, SET_Y + y * SET_K
+
+
+def img_win(wid, src, x, y, w, h, extra=""):
+    return (f'<div class="win" id="{wid}" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px;background:#111;{extra}">'
+            f'<img src="{src}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></div>')
+
+
+def desktop_two_windows(p, menu_app="Edits"):
+    ed = img_win(f"{p}-wE", FT + "edits_projects.png", 16, 36, 470, 339)
+    rs = win(f"{p}-wR", 392, 196, 524, 318, "Resolve", resolve_ui(f"{p}r", 524, 290, menu=False), "#1a1c21")
+    return f'<div class="wall"></div>{menubar(menu_app)}{ed}{rs}{dock(p)}'
+
+
+def s05(c):
+    p = c.p
+    k = 620 / 1304
+    inst = img_win(f"{p}-wI", FT + "edits_installer.png", 156, 70, 620, 377)
+    login = img_win(f"{p}-wL", FT + "edits_login.png", 166, 46, 600, 427)
+    proj = img_win(f"{p}-wP", FT + "edits_projects.png", 166, 46, 600, 432)
+    ghost = f'<img id="{p}-ghost" src="{FT}edits_icon.png" style="position:absolute;left:0;top:0;width:126px;height:128px;opacity:0;z-index:30">'
+    c.laptop(f'<div class="wall"></div>{menubar("Finder")}{inst}{login}{proj}{ghost}{dock(p)}')
+    c.js(f'gsap.set("#{p}-wL, #{p}-wP",{{opacity:0}});')
+    tdl, tsi = c.trig("B05", "download"), c.trig("B05", "sign")
+    ix, iy = 156 + 322 * k, 70 + 460 * k     # Edits icon in the installer
+    ax, ay = 156 + 980 * k, 70 + 470 * k     # Applications folder
+    c.cursor(ix + 120, iy + 110)
+    c.js(f'cursorTo("{p}-cur",{tdl - 0.75:.3f},{ix:.0f},{iy:.0f},0.5);')
+    c.js(f'zoomTo("{p}-zoom",{tdl - 0.6:.3f},{(ix + ax) / 2:.0f},{iy:.0f},1.7,0.4);')
+    c.js(f'clickAt("{p}-rip",{tdl - 0.2:.3f},{ix:.0f},{iy:.0f});')
+    # drag: a ghost of the real icon follows the pointer onto Applications
+    c.js(f'tl.fromTo("#{p}-ghost",{{x:{ix - 63:.0f},y:{iy - 64:.0f},opacity:0.85,scale:0.9}},{{x:{ax - 63:.0f},y:{ay - 64:.0f},scale:0.8,duration:0.7,ease:"power2.inOut",immediateRender:false}},L({tdl:.3f}));')
+    c.js(f'cursorTo("{p}-cur",{tdl:.3f},{ax:.0f},{ay:.0f},0.7);')
+    c.js(f'tl.to("#{p}-ghost",{{opacity:0,scale:0.5,duration:0.15}},L({tdl + 0.72:.3f}));')
+    c.js(f'clickAt("{p}-rip",{tdl + 0.72:.3f},{ax:.0f},{ay:.0f});')
+    c.js(f'zoomOut("{p}-zoom",{tdl + 1.0:.3f},0.4);')
+    # login window, click "log in with your browser"
+    lx, ly = 166 + 750 * 600 / 1976, 46 + 732 * 427 / 1408
+    c.js(f'tl.fromTo("#{p}-wL",{{opacity:0,scale:0.94}},{{opacity:1,scale:1,duration:0.28,ease:"back.out(1.6)",immediateRender:false}},L({tsi - 0.75:.3f}));')
+    c.js(f'cursorTo("{p}-cur",{tsi - 0.5:.3f},{lx:.0f},{ly + 4:.0f},0.45);')
+    c.js(f'zoomTo("{p}-zoom",{tsi - 0.45:.3f},{lx:.0f},{ly:.0f},1.6,0.4);')
+    c.js(f'clickAt("{p}-rip",{tsi + 0.1:.3f},{lx:.0f},{ly:.0f});')
+    c.js(f'zoomOut("{p}-zoom",{tsi + 0.45:.3f},0.35);')
+    c.js(f'tl.fromTo("#{p}-wP",{{opacity:0}},{{opacity:1,duration:0.2,immediateRender:false}},L({tsi + 0.55:.3f}));')
+    c.badge(f"{p}-bd", "E1", c.trig("B05", "Edits"))
+    checklist(c, f"{p}-ck", [("Download Edits for Mac", tdl, tdl + 0.75), ("Sign in with Instagram", tsi, tsi + 0.6)], ZR[0], 980, 644)
+
+
+def settings_video(p, vid_id, src, poster, start_local, dur, media_start=0.0):
+    return (f'<div class="win" id="{p}-wS" style="left:{SET_X}px;top:{SET_Y}px;width:689px;height:540px;background:#1b1d22">'
+            f'<img id="{p}-poster" src="{poster}" style="position:absolute;inset:0;width:100%;height:100%">'
+            f'<video id="{vid_id}" class="clip" src="{src}" muted playsinline data-start="{start_local:.3f}" data-duration="{dur:.3f}" '
+            f'data-media-start="{media_start:.3f}" data-track-index="0" style="position:absolute;inset:0;width:100%;height:100%"></video></div>')
+
+
+def s06(c):
+    p = c.p
+    ttog = c.ctx.sfx["toggle"]
+    v0 = ttog - 2.333              # recording starts so its real toggle flip lands on the click sound
+    vstart = max(0.0, v0 - c.s0)
+    mstart = max(0.0, c.s0 - v0)
+    vdur = min(7.2 - mstart, c.dur - vstart) - 0.02
+    proj = img_win(f"{p}-wP", FT + "edits_projects.png", 141, 40, 650, 468)
+    c.laptop(f'<div class="wall"></div>{menubar("Edits")}{proj}' +
+             settings_video(p, f"{p}-vid", FT + "edits_settings.mp4", FT + "edits_settings_first.png", vstart, vdur, mstart))
+    c.cursor(0, 0, hidden=True)
+    ts, ta, ten, tcp = c.trig("B06", "Settings"), c.trig("B06", "Automation"), c.trig("B06", "Enable"), c.trig("B06", "Copy")
+    c.js(f'gsap.set("#{p}-wS",{{opacity:0}});')
+    c.js(f'tl.fromTo("#{p}-wS",{{opacity:0,scale:0.94}},{{opacity:1,scale:1,duration:0.3,ease:"back.out(1.6)",immediateRender:false}},L({ts:.3f}));')
+    c.js(f'tl.to("#{p}-wP",{{opacity:0.25,duration:0.3}},L({ts:.3f}));')
+    # callout ring on the Automation item, then a viewfinder lock on the real toggle
+    axp, ayp = set_pt(150, 318)
+    c.add(f'<div class="abs" id="{p}-ring" style="left:{74 + axp - 80:.0f}px;top:{164 + ayp - 24:.0f}px;width:160px;height:48px;border-radius:24px;border:4px solid #FF9F1C;opacity:0;z-index:44"></div>')
+    c.js(f'tl.fromTo("#{p}-ring",{{opacity:0,scale:1.3}},{{opacity:1,scale:1,duration:7*F,ease:"power3.out"}},L({ta:.3f})); leave("#{p}-ring",{ten - 0.2:.3f});')
+    tx, ty = set_pt(1327, 254)
+    c.js(f'zoomTo("{p}-zoom",{ten:.3f},{tx - 150:.0f},{ty + 20:.0f},1.8,0.45);')
+    c.add(f'<div class="vf" id="{p}-vf" style="left:150px;top:{164 + 40}px;width:820px;height:220px"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>')
+    c.js(f'tl.fromTo("#{p}-vf",{{opacity:0,scale:1.35}},{{opacity:1,scale:1,duration:8*F,ease:"power3.out"}},L({ten + 0.45:.3f}));')
+    c.js(f'leave("#{p}-vf",{ttog + 0.6:.3f}); zoomOut("{p}-zoom",{ttog + 0.65:.3f},0.4);')
+    cx, cy = set_pt(1320, 810)
+    c.add(f'<div class="selbox" id="{p}-sel" style="left:{74 + cx - 34:.0f}px;top:{164 + cy - 18:.0f}px;width:68px;height:36px;border-radius:12px"></div>')
+    c.js(f'tl.fromTo("#{p}-sel",{{opacity:0,scale:1.5}},{{opacity:1,scale:1,duration:7*F,ease:"power3.out"}},L({tcp:.3f}));')
+    c.badge(f"{p}-bd", "E2", c.trig("B06", "Edits"))
+    x, y = ZR[0], 972
+    def ch(i):
+        return f'<svg id="{p}-ch{i}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:.35;flex:none"><path d="M9 5l7 7-7 7"/></svg>'
+    bc = (f'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font:700 38px/1.35 Poppins, sans-serif">'
+          f'<span id="{p}-b0" style="opacity:.35">Settings</span>{ch(0)}<span id="{p}-b1" style="opacity:.35">Automation</span>{ch(1)}'
+          f'<span id="{p}-b2" style="opacity:.35">Enable Automation Server</span></div>')
+    c.add(f'<div class="glass abs" id="{p}-bc" style="left:{x}px;top:{y}px;width:644px;padding:22px 30px;{c.glass_style(x, y)}">{bc}</div>')
+    c.js(f'gsap.set("#{p}-bc",{{opacity:0}}); enter("#{p}-bc",{ts:.3f});')
+    for i, t in enumerate((ts, ta, ten)):
+        c.js(f'tl.to("#{p}-b{i}",{{opacity:1,color:"#FF9F1C",duration:0.15}},L({t:.3f}));')
+        if i:
+            c.js(f'tl.to("#{p}-b{i - 1}",{{color:"#ffffff",duration:0.15}},L({t:.3f})); tl.to("#{p}-ch{i - 1}",{{opacity:1,duration:0.15}},L({t:.3f}));')
+    c.chip(f"{p}-cc", "Copy for Claude Code", "copy", 0, 826, tcp, center_row=True)
+
+
+def s07(c):
+    p = c.p
+    tcp, tte, tpa, ten = c.trig("B07", "Copy"), c.trig("B07", "Terminal"), c.trig("B07", "paste"), c.trig("B07", "Enter")
+    tq, tre = c.trig("B07", "poora"), c.trig("B07", "dobara")
+    vstart = max(0.0, (tcp + 0.05 - 0.75) - c.s0)   # real click (0.75 s into the take) on the word "Copy"
+    term = (f'<div class="term" style="position:absolute;inset:0;padding:12px 16px">'
+            f'<div class="tline"><span class="tdim">%</span> <span id="{p}-paste" style="opacity:0"><span class="mask">token hidden</span></span></div>'
+            f'<div class="tline" id="{p}-l2" style="opacity:0"><span class="tdim">%</span> </div></div>')
+    tw_ = win(f"{p}-wT", 330, 170, 560, 230, "Terminal", term, "#0c0f16")
+    cl = win(f"{p}-wC", 200, 64, 560, 380, "Claude", claude_chat(f"{p}c", 560, 352), "#262624")
+    sv = (f'<div class="win" id="{p}-wS" style="left:{SET_X}px;top:{SET_Y}px;width:689px;height:540px;background:#1b1d22">'
+          f'<img src="{FT}edits_copy_last.png" style="position:absolute;inset:0;width:100%;height:100%">'
+          f'<video id="{p}-vid" class="clip" src="{FT}edits_copy.mp4" muted playsinline data-start="{vstart:.3f}" data-duration="2.34" '
+          f'data-media-start="0" data-track-index="0" style="position:absolute;inset:0;width:100%;height:100%"></video></div>')
+    c.laptop(f'<div class="wall"></div>{menubar("Edits")}{sv}{tw_}{cl}{dock(p)}')
+    c.cursor(0, 0, hidden=True)
+    c.js(f'gsap.set("#{p}-wT, #{p}-wC",{{opacity:0}});')
+    cx, cy = set_pt(1320, 810)
+    c.js(f'zoomTo("{p}-zoom",{c.s0:.3f},{cx - 120:.0f},{cy - 40:.0f},1.6,0.01);')
+    c.js(f'zoomOut("{p}-zoom",{tcp + 0.55:.3f},0.4);')
+    c.add(f'<div class="abs" id="{p}-fly" style="left:0;top:0;width:44px;height:30px;border-radius:8px;background:#FF9F1C;display:flex;align-items:center;justify-content:center;opacity:0;z-index:45">{icon("copy", 18, "#0E1422", 2.4)}</div>')
+    c.js(f'tl.fromTo("#{p}-fly",{{x:{74 + cx - 22:.0f},y:{164 + cy - 15:.0f},opacity:1,scale:1}},{{x:{74 + 380},y:{164 + 216},scale:0.8,duration:0.55,ease:"power2.inOut",immediateRender:false}},L({tcp + 0.6:.3f}));')
+    c.js(f'tl.to("#{p}-fly",{{opacity:0,duration:0.1}},L({tcp + 1.15:.3f}));')
+    c.js(f'tl.fromTo("#{p}-wT",{{opacity:0,scale:0.94}},{{opacity:1,scale:1,duration:0.25,ease:"back.out(1.6)",immediateRender:false}},L({tte:.3f}));')
+    c.js(f'tl.to("#{p}-wS",{{opacity:0.4,duration:0.2}},L({tte:.3f}));')
+    c.js(f'zoomTo("{p}-zoom",{tte + 0.1:.3f},560,280,1.6,0.4);')
+    c.js(f'show("#{p}-paste",{tpa + 0.1:.3f}); show("#{p}-l2",{ten + 0.15:.3f});')
+    c.js(f'zoomOut("{p}-zoom",{ten + 0.6:.3f},0.4);')
+    c.js(f'tl.fromTo("#{p}-wC",{{opacity:1,scale:1}},{{opacity:1,scale:1,duration:0.01,immediateRender:false}},L({tq - 0.5:.3f}));')
+    c.js(f'tl.fromTo("#{p}-wC",{{opacity:1,scale:1}},{{opacity:0,scale:0.9,duration:0.18,ease:"power2.in",immediateRender:false}},L({tq:.3f}));')
+    c.js(f'tl.to("#{p}-run-claude",{{opacity:0,duration:0.1}},L({tq + 0.1:.3f}));')
+    c.js(f'tl.to("#{p}-app-claude",{{y:-16,duration:0.16,yoyo:true,repeat:3,ease:"power1.out"}},L({tre:.3f}));')
+    c.js(f'tl.to("#{p}-run-claude",{{opacity:1,duration:0.1}},L({tre + 0.2:.3f}));')
+    c.js(f'tl.fromTo("#{p}-wC",{{opacity:0,scale:0.9}},{{opacity:1,scale:1,duration:0.25,ease:"back.out(1.6)",immediateRender:false}},L({tre + 0.55:.3f}));')
+    c.badge(f"{p}-bd", "E3", c.trig("B07", "Edits"))
+    checklist(c, f"{p}-ck", [("Copy", tcp, tcp + 0.35), ("Terminal: paste, Enter", tte, ten + 0.2), ("Quit Claude Desktop fully, reopen", tq, tre + 0.6)], ZR[0], 962, 644)
+
+
+# ---------- hook: the opening plus a slow orbit of three glass icons around the title ----------
+_s01_base = s01
+
+
+def s01(c):
+    _s01_base(c)
+    p = c.p
+    tset = c.we("B01", "Resolve") + 0.25
+    cx, cy, rx, ry = 628, 1094, 306, 156
+    icons = [("spark", "#FF9F1C"), ("film", "#ffffff"), ("chip", "#ffffff")]
+    c.add(f'<svg class="abs" id="{p}-orb" style="left:{cx - rx - 4}px;top:{cy - ry - 4}px;opacity:0;z-index:1" width="{2 * rx + 8}" height="{2 * ry + 8}">'
+          f'<ellipse cx="{rx + 4}" cy="{ry + 4}" rx="{rx}" ry="{ry}" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5" stroke-dasharray="4 8"/></svg>')
+    for i, (ic, col) in enumerate(icons):
+        c.add(f'<div class="glass abs" id="{p}-o{i}" style="left:0;top:0;width:64px;height:64px;border-radius:32px;display:flex;align-items:center;justify-content:center;opacity:0;{c.glass_style(cx, cy)}">'
+              f'{icon(ic, 30, col, 2.2)}</div>')
+    c.js(f'gsap.set("#{p}-tt",{{zIndex:5}});')
+    c.js(f'tl.fromTo("#{p}-orb",{{opacity:0,scale:0.85}},{{opacity:1,scale:1,duration:0.4,transformOrigin:"50% 50%"}},L({tset:.3f}));')
+    c.js(f'''(function(){{ const o={{a:0}}; const els=[0,1,2].map(i=>document.getElementById("{p}-o"+i));
+  function place(){{ els.forEach((el,i)=>{{ const a=o.a+i*2.0944; const x={cx}+{rx}*Math.cos(a)-32, y={cy}+{ry}*Math.sin(a)-32;
+    const front=Math.sin(a); el.style.transform="translate("+x.toFixed(1)+"px,"+y.toFixed(1)+"px) scale("+(0.82+0.18*(front+1)/2).toFixed(3)+")";
+    el.style.zIndex = front>0 ? 3 : 0; const side=Math.min(1,Math.max(0,(x+32-{cx - rx + 70})/110));
+    el.style.opacity = (o.v*side*(0.55+0.45*(front+1)/2)).toFixed(3); }}); }}
+  o.v=0; tl.fromTo(o,{{v:0}},{{v:1,duration:0.4,onUpdate:place}},L({tset:.3f}));
+  tl.fromTo(o,{{a:-1.5708}},{{a:-1.5708+Math.PI*0.9,duration:{max(0.5, c.s0 + c.dur - tset):.3f},ease:"none",onUpdate:place}},L({tset:.3f}));
+  place(); }})();''')
