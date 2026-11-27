@@ -12,12 +12,29 @@
 
 Change from the brief, by your instruction: no screen recordings were supplied. Every screen is a stylised, generic recreation in HTML and CSS (MacBook frame, macOS style desktop, Terminal, Claude Desktop and Claude Code, an Edits style editor, a Resolve style workspace). No official logos or trademarked artwork. The Access Token only ever appears as the placeholder `token hidden` on a solid mask.
 
+## Version 2 (27 Nov): real Edits footage, redrawn Resolve, more animation
+
+- **Real Edits captures from the creator** replace the recreated Edits screens:
+  - B05: the Edits installer (the drag to Applications is animated with the real app icon), the real login screen, the real Projects page.
+  - B06: the real Settings > Automation recording. It is timed so the real toggle flip lands on the click sound, with a viewfinder lock on the toggle and a select box on the real Claude Code Copy button.
+  - B07: the real Copy click on Claude Code.
+  - B01, B03, B04, B16: the real Projects window on the opening and closing desktop.
+- **Masked before use:** the Access Token (solid "token hidden" box on every frame), the login code, the login QR code and the profile photo. Raw files stay in the session uploads and are never copied into the project or git. Every masked frame was OCR checked against the real secrets (`build/footage_mask_check.json`: 293 frames, 0 hits). A positive control on a raw frame was flagged, so the check works.
+- **Not used:**
+  - The three Claude recordings. They show the `claude mcp add` command pasted into the Claude chat instead of Terminal, and Claude replying that it cannot operate Edits. So they are not proof of the Edits demo, and they also show the token.
+  - The downloaded YouTube tutorial by another creator. No written permission was provided.
+- **Resolve redrawn in the real app layout:** the Edit page with Media Pool, bins and clip names, dual viewers with timecode, V2/V1/A1 tracks with named clips and waveforms, the page bar, a Render Queue for the render step, and the Workspace > Scripts > Claude_MCP_Bridge path in the macOS menu bar. It is a generic drawing with no logos.
+- **More animation** (requested by the creator):
+  - In the hook, an orbit of three glass icons (Claude, Edits, Resolve) around the title. It passes behind the title and fades at its left edge, so it never covers a letter. The brief's Playbook lesson warned against orbit, so it is used once only.
+  - A light sheen sweep and a flip-up tilt on every glass card entrance.
+- **Action for the creator:** regenerate the Edits Access Token (Settings > Automation > Regenerate). It was visible in the shared screenshots and recordings.
+
 ## Deliverables
 
 | File | What |
 |---|---|
 | `renders/EDITS_RESOLVE_9x16.mp4` | Master, 1080 x 1920, 30 fps, H.264 High, crf 17, preset slow, tune animation, AAC 320 kbps 48 kHz, from 2x frames with a Lanczos downscale |
-| `renders/EDITS_RESOLVE_phone.mp4` | Phone copy, two pass, about 23 MB (under 30 MB) |
+| `renders/EDITS_RESOLVE_phone.mp4` | Phone copy, two pass, 23.0 MB (under 30 MB) |
 | `renders/EDITS_RESOLVE_nomusic.mp4` | Same picture, voice and sound moments only |
 | `renders/EDITS_RESOLVE_teaser.mp4` | 30.4 s teaser: B01, B02, B03, B12, B16 |
 | `renders/captions.srt` | Roman Hinglish captions, 135 cues |
@@ -68,18 +85,18 @@ Source: `reel/` (HyperFrames project, generated) and `build/` (generators and ch
 | G1 hook | Pass | Frame 0 shows the Edits and Resolve windows, the host and the first caption (`Maine`); the prompt bar types `edit my reel` from 0.35 s |
 | G2 timing | Pass on measured words, 2 outliers | Final mix re-transcribed: 51 of 53 English anchor words start within 3 frames of their caption word (mean 0.54 frames, max 7.2 frames on 2 words). The other caption words are spread by length between anchors, so they cannot be measured one by one |
 | G3 lip sync | Pass | 672 Rhubarb mouth cues; every cue inside a measured silence forced to rest (X) |
-| G4 real proof | Not applicable, by your change | No recordings: all screens are labelled recreations. Every command and menu name matches the brief exactly |
+| G4 real proof | Partial | Real Edits footage for B05 to B07 and the desktop. The Edits demo (B02, B11, B12), Resolve, Terminal and Claude are recreations, because no working Edits demo or Resolve recording was supplied. Every command and menu name matches the brief exactly |
 | G5 facts | Pass | All 35 overlay strings checked against the section 3b text by script; claims are only those in section 2 |
 | G6 clarity | Pass | Every overlay holds to the end of its beat (at least 1 s after its trigger word); commands wrap, never cut off |
 | G7 glass | Pass | At most two glass cards at once (B03, B11); no backdrop-filter anywhere; no glow or neon |
-| G8 privacy | Pass | OCR of all 447 2x frames of S06 and S07: 0 token-like strings; `token hidden` placeholder seen in 312 frames |
+| G8 privacy | Pass | OCR of all 636 2x frames of S05 to S07 (every scene with real Edits footage): 0 token-like strings and 0 login codes; `token hidden` seen in 361 frames. Masked source footage: 293 frames, 0 hits |
 | G9 frames | Pass | 2 frames each side of all 16 cuts: no blank frames (lowest contrast 22.3, blank is under 12), no single-frame flashes. Earlier render failed (stray tick row, stray icon), fixed |
 | G10 brand | Pass | Navy #0E1422, one saffron accent #FF9F1C, green only for connected and done, red only for errors, Poppins ExtraBold and JetBrains Mono, code-made sting at the start and at the end |
 | G11 audio | Pass, with one note | -14.0 LUFS integrated, true peak -1.9 dBTP, 48 kHz, short-term (3 s) between -17.5 and -11.9 LUFS, 9 sound moments only. Note: loudness range 3.0 LU, under the 4 to 7 LU target (see choice 18) |
-| G12 loop | Pass | Last frame against frame 0: PSNR 48.5 dB, only 22 of 2,073,600 pixels differ by more than 20 levels (sub-pixel grid drift and compression). The sting fades in over 4 ms and the mix fades out, so there is no click at the loop. Earlier render failed (3 px head offset), fixed |
+| G12 loop | Pass | Last frame against frame 0: PSNR 48.8 dB, only 18 of 2,073,600 pixels differ by more than 20 levels (sub-pixel grid drift and compression). The sting fades in over 4 ms and the mix fades out, so there is no click at the loop. Earlier render failed (3 px head offset), fixed |
 | G13 text | Pass | No em or en dashes in any caption, overlay, code file, srt or report (scripted scan) |
 | G14 length | Pass | 103.07 s (95 to 140 s). Teaser 30.4 s |
 
 ## Privacy scan
 
-Passed on the final render. 447 frames of S06 and S07 at 2160 x 3840 were OCR scanned with tesseract. No token, key or long secret-like string was found. The Access Token row only ever shows the solid `token hidden` mask, and the pasted command in B07 is only the mask. No real names, emails or paths: the demo paths are `~/Footage/day1` and `~/Exports`. Result file: `build/privacy_scan.json`.
+Passed on the final render. 636 frames of S05, S06 and S07 at 2160 x 3840 were OCR scanned with tesseract. No token, key or long secret-like string was found. The Access Token row only ever shows the solid `token hidden` mask, and the pasted command in B07 is only the mask. No real names, emails or paths: the demo paths are `~/Footage/day1` and `~/Exports`. Result file: `build/privacy_scan.json`.
