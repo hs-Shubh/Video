@@ -1,11 +1,11 @@
 {
- "scenes": "S06 and S07",
+ "scenes": "S05, S06 and S07 (all real Edits footage)",
  "range_s": [
-  29.7333,
+  23.4,
   44.6
  ],
- "frames_scanned": 447,
- "frames_showing_placeholder": 312,
+ "frames_scanned": 636,
+ "frames_showing_placeholder": 361,
  "token_like_hits": [],
  "pass": true
 }
