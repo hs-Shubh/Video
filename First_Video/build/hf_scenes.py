@@ -14,7 +14,42 @@ def fix_sets(js):
 
 
 class Sc:
+    HOT = [(250, 170), (680, 330), (466, 300), (300, 420)]
+
+    def add_screen(self, html):
+        self.screen_extra.append(html)
+
+    def auto_camera(self):
+        """Hard reframe cuts about every 2.2 s wherever the scene has no zoom move of its own."""
+        busy = []
+        z = sorted([(float(m.group(2)), m.group(1)) for m in _re.finditer(r'(zoomTo|zoomOut)\("[^"]+",([0-9.]+)', "\n".join(self.j))])
+        cur = None
+        for t, kind in z:
+            if kind == "zoomTo" and cur is None:
+                cur = t - 0.2
+            elif kind == "zoomOut" and cur is not None:
+                busy.append((cur, t + 0.5)); cur = None
+        if cur is not None:
+            busy.append((cur, self.s0 + self.dur))
+        step = getattr(self, "cam_step", 2.2)
+        t, k, out = self.s0 + getattr(self, "cam_start", 1.9), 0, []
+        end = self.s0 + self.dur - 0.7
+        while t < end:
+            if not any(a - 0.3 <= t <= b for a, b in busy):
+                hot = getattr(self, "hot", self.HOT)
+                hx, hy = hot[k % len(hot)]
+                sc = (1.65, 1.2, 1.55, 1.2)[k % 4]
+                out.append(f'camCut("{self.p}-zoom",{t:.3f},{hx},{hy},{sc});')
+                k += 1
+                t += step
+            else:
+                t += 0.25
+        return out
+
     def __init__(self, sid, s0, dur, ctx):
+        self.screen_extra = []
+        self.screen_html = None
+        self.auto_cam = True
         self.id, self.s0, self.dur, self.ctx = sid, s0, dur, ctx
         self.m, self.j = [], []
         self.p = sid  # id prefix
@@ -75,9 +110,9 @@ class Sc:
     # ---------- base ----------
     def laptop(self, screen_html, push=True):
         p = self.p
-        self.add(laptop_frame())
-        self.add(f'<div class="screen" id="{p}-screen" data-layout-ignore><div class="push" id="{p}-push"><div class="zoom" id="{p}-zoom">{screen_html}'
-                 f'<div class="ripple" id="{p}-rip"></div>{cursor_svg(p + "-cur")}</div></div></div>')
+        self.screen_html = screen_html
+        self.add("%%SCREEN%%")
+        self.js(f'gsap.set("#{p}-zoom",Object.assign({{transformOrigin:"0 0"}},camState(SW/2,SH/2,WIDE)));')
         if push:
             self.js(f'tl.fromTo("#{p}-push",{{scale:1}},{{scale:1.03,duration:{max(0.5, self.dur - 0.05):.3f},ease:"none",transformOrigin:"50% 50%"}},0);')
 
@@ -85,6 +120,13 @@ class Sc:
         self.js(f'tl.set("#{self.p}-cur",{{x:{x},y:{y},opacity:{0 if hidden else 1}}},0);')
 
     def html(self):
+        p = self.p
+        if self.screen_html is not None:
+            scr = (f'<div class="screen" id="{p}-screen" data-layout-ignore><div class="push" id="{p}-push"><div class="zoom" id="{p}-zoom">{self.screen_html}'
+                   + "".join(self.screen_extra) + f'<div class="ripple" id="{p}-rip"></div>{cursor_svg(p + "-cur")}</div></div></div>')
+            self.m = [scr if x == "%%SCREEN%%" else x for x in self.m]
+            if self.auto_cam:
+                self.j = self.auto_camera() + self.j
         self.m = [_re.sub(r'(<div[^>]*class="[^"]*\bglass\b[^"]*"[^>]*>)', r'\1<i class="sheen"></i>', x) for x in self.m]
         return ("<template>\n<style>" + CSS + "</style>\n"
                 f'<div id="root" data-composition-id="{self.id}" data-width="1080" data-height="1920">\n'
@@ -848,15 +890,15 @@ def s06(c):
     c.js(f'tl.to("#{p}-wP",{{opacity:0.25,duration:0.3}},L({ts:.3f}));')
     # callout ring on the Automation item, then a viewfinder lock on the real toggle
     axp, ayp = set_pt(150, 318)
-    c.add(f'<div class="abs" id="{p}-ring" style="left:{74 + axp - 80:.0f}px;top:{164 + ayp - 24:.0f}px;width:160px;height:48px;border-radius:24px;border:4px solid #FF9F1C;opacity:0;z-index:44"></div>')
+    c.add_screen(f'<div class="abs" id="{p}-ring" style="left:{axp - 80:.0f}px;top:{ayp - 22:.0f}px;width:160px;height:44px;border-radius:22px;border:3px solid #FF9F1C;opacity:0;z-index:44"></div>')
     c.js(f'tl.fromTo("#{p}-ring",{{opacity:0,scale:1.3}},{{opacity:1,scale:1,duration:7*F,ease:"power3.out"}},L({ta:.3f})); leave("#{p}-ring",{ten - 0.2:.3f});')
     tx, ty = set_pt(1327, 254)
     c.js(f'zoomTo("{p}-zoom",{ten:.3f},{tx - 150:.0f},{ty + 20:.0f},1.8,0.45);')
-    c.add(f'<div class="vf" id="{p}-vf" style="left:150px;top:{164 + 40}px;width:820px;height:220px"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>')
+    c.add_screen(f'<div class="vf" id="{p}-vf" style="left:{tx - 330:.0f}px;top:{ty - 46:.0f}px;width:390px;height:92px"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>')
     c.js(f'tl.fromTo("#{p}-vf",{{opacity:0,scale:1.35}},{{opacity:1,scale:1,duration:8*F,ease:"power3.out"}},L({ten + 0.45:.3f}));')
     c.js(f'leave("#{p}-vf",{ttog + 0.6:.3f}); zoomOut("{p}-zoom",{ttog + 0.65:.3f},0.4);')
     cx, cy = set_pt(1320, 810)
-    c.add(f'<div class="selbox" id="{p}-sel" style="left:{74 + cx - 34:.0f}px;top:{164 + cy - 18:.0f}px;width:68px;height:36px;border-radius:12px"></div>')
+    c.add_screen(f'<div class="selbox" id="{p}-sel" style="left:{cx - 34:.0f}px;top:{cy - 18:.0f}px;width:68px;height:36px;border-radius:12px;border-width:2px"></div>')
     c.js(f'tl.fromTo("#{p}-sel",{{opacity:0,scale:1.5}},{{opacity:1,scale:1,duration:7*F,ease:"power3.out"}},L({tcp:.3f}));')
     c.badge(f"{p}-bd", "E2", c.trig("B06", "Edits"))
     x, y = ZR[0], 972
@@ -894,8 +936,8 @@ def s07(c):
     cx, cy = set_pt(1320, 810)
     c.js(f'zoomTo("{p}-zoom",{c.s0:.3f},{cx - 120:.0f},{cy - 40:.0f},1.6,0.01);')
     c.js(f'zoomOut("{p}-zoom",{tcp + 0.55:.3f},0.4);')
-    c.add(f'<div class="abs" id="{p}-fly" style="left:0;top:0;width:44px;height:30px;border-radius:8px;background:#FF9F1C;display:flex;align-items:center;justify-content:center;opacity:0;z-index:45">{icon("copy", 18, "#0E1422", 2.4)}</div>')
-    c.js(f'tl.fromTo("#{p}-fly",{{x:{74 + cx - 22:.0f},y:{164 + cy - 15:.0f},opacity:1,scale:1}},{{x:{74 + 380},y:{164 + 216},scale:0.8,duration:0.55,ease:"power2.inOut",immediateRender:false}},L({tcp + 0.6:.3f}));')
+    c.add_screen(f'<div class="abs" id="{p}-fly" style="left:0;top:0;width:44px;height:30px;border-radius:8px;background:#FF9F1C;display:flex;align-items:center;justify-content:center;opacity:0;z-index:45">{icon("copy", 18, "#0E1422", 2.4)}</div>')
+    c.js(f'tl.fromTo("#{p}-fly",{{x:{cx - 22:.0f},y:{cy - 15:.0f},opacity:1,scale:1}},{{x:380,y:216,scale:0.8,duration:0.55,ease:"power2.inOut",immediateRender:false}},L({tcp + 0.6:.3f}));')
     c.js(f'tl.to("#{p}-fly",{{opacity:0,duration:0.1}},L({tcp + 1.15:.3f}));')
     c.js(f'tl.fromTo("#{p}-wT",{{opacity:0,scale:0.94}},{{opacity:1,scale:1,duration:0.25,ease:"back.out(1.6)",immediateRender:false}},L({tte:.3f}));')
     c.js(f'tl.to("#{p}-wS",{{opacity:0.4,duration:0.2}},L({tte:.3f}));')
@@ -1105,14 +1147,12 @@ def s10(c):
     c.js(f'cursorTo("{p}-cur",{tsc - 0.35:.3f},{scx:.0f},{scy:.0f},0.35); tl.to("#{p}-dd6",{{backgroundColor:"#2f6fdb",duration:0.06}},L({tsc:.3f}));')
     c.js(f'tl.fromTo("#{p}-sub",{{opacity:0}},{{opacity:1,duration:0.12,immediateRender:false}},L({tsc + 0.05:.3f}));')
     c.js(f'cursorTo("{p}-cur",{tbr - 0.35:.3f},{bx:.0f},{by:.0f},0.4); tl.to("#{p}-bridge",{{backgroundColor:"#2f6fdb",duration:0.06}},L({tbr:.3f}));')
-    c.add(f'<div class="abs" id="{p}-ring" style="left:0;top:0;width:150px;height:44px;border-radius:22px;border:4px solid #FF9F1C;opacity:0;z-index:44"></div>')
-    def fx(x): return 74 + zx + s * x
-    def fy(y): return 164 + zy + s * y
+    c.add_screen(f'<div class="abs" id="{p}-ring" style="left:0;top:0;width:150px;height:30px;border-radius:15px;border:3px solid #FF9F1C;opacity:0;z-index:44"></div>')
     def ring(t, x, y, wpx):
         return f'tl.to("#{p}-ring",{{x:{x:.0f},y:{y:.0f},width:{wpx:.0f},opacity:1,duration:0.2,ease:"power2.out"}},L({t:.3f}));'
-    c.js(ring(tws, fx(wx) - 6, fy(wsy) - 22, s * wwid + 12))
-    c.js(ring(tsc, fx(wx) - 2, fy(scy) - 22, s * 200 + 4))
-    c.js(ring(tbr, fx(wx + 196) - 2, fy(by) - 22, s * 190 + 4))
+    c.js(ring(tws, wx - 6, -3, wwid + 12))
+    c.js(ring(tsc, wx - 2, scy - 15, 204))
+    c.js(ring(tbr, wx + 194, by - 15, 194))
     c.js(f'clickAt("{p}-rip",{tclk:.3f},{bx:.0f},{by:.0f}); leave("#{p}-ring",{tclk + 0.3:.3f});')
     c.js(f'tl.to("#{p}-dd, #{p}-sub",{{opacity:0,duration:0.12}},L({tclk + 0.25:.3f})); tl.to("#{p}-mb-Workspace",{{backgroundColor:"rgba(255,255,255,0)",duration:0.1}},L({tclk + 0.25:.3f}));')
     c.js(f'zoomOut("{p}-zoom",{tclk + 0.2:.3f},0.4);')
@@ -1135,3 +1175,40 @@ def s10(c):
     c.add(f'<div class="monobox glass" id="{p}-mb" style="left:{x}px;top:{y}px;width:300px;{c.glass_style(x, y)}"><span id="{p}-mbt"></span><span class="caret"></span></div>')
     c.js(f'gsap.set("#{p}-mb",{{opacity:0}}); enter("#{p}-mb",{tm_:.3f}); typeText("#{p}-mbt","/mcp",{tm_ + 0.05:.3f},14);')
     c.pill(f"{p}-ok", "davinci connected", 0, 830, tco, "ok", center_row=True)
+
+
+
+# ---------- version 3 hook: "EDIT BOLKAR" over a dark scrim from frame 0, fast camera cuts ----------
+def hook_word(p):
+    return (f'<div class="abs" id="{p}-scrim" style="left:24px;top:112px;width:1032px;height:850px;border-radius:28px;background:rgba(8,12,22,.66);z-index:6"></div>'
+            f'<div class="abs" id="{p}-hw" style="left:24px;top:112px;width:1032px;height:850px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:7;'
+            f'font:800 190px/0.98 Poppins, sans-serif;letter-spacing:-3px;text-align:center"><div>EDIT</div><div class="saff">BOLKAR</div></div>')
+
+
+_s01_v2 = s01
+
+
+def s01(c):
+    c.hot = [(250, 190), (690, 360), (466, 291), (250, 190)]
+    c.cam_start, c.cam_step = 1.9, 1.3
+    _s01_v2(c)
+    p = c.p
+    c.add(hook_word(p))
+    te = c.trig("B01", "Edits")
+    c.js(f'tl.fromTo("#{p}-hw",{{scale:1}},{{scale:1.06,duration:{te:.3f},ease:"sine.out",transformOrigin:"50% 50%"}},0);')
+    c.js(f'tl.to("#{p}-hw",{{opacity:0,scale:1.25,duration:6*F,ease:"power2.in"}},L({te - 0.1:.3f})); tl.to("#{p}-scrim",{{opacity:0,duration:6*F}},L({te - 0.1:.3f}));')
+
+
+_s16_v2 = s16
+
+
+def s16(c, total):
+    _s16_v2(c, total)
+    p = c.p
+    tend = total - 0.62
+    c.add(hook_word(p))
+    c.js(f'gsap.set("#{p}-hw, #{p}-scrim",{{opacity:0}});')
+    c.js(f'tl.fromTo("#{p}-scrim",{{opacity:0}},{{opacity:1,duration:0.2,immediateRender:false}},L({tend + 0.05:.3f}));')
+    c.js(f'tl.fromTo("#{p}-hw",{{opacity:0,scale:1.2}},{{opacity:1,scale:1,duration:0.25,ease:"power3.out",immediateRender:false,transformOrigin:"50% 50%"}},L({tend + 0.05:.3f}));')
+    # the camera returns to the frame 0 framing
+    c.js(f'tl.to("#{p}-zoom",Object.assign({{duration:0.2,transformOrigin:"0 0"}},camState(SW/2,SH/2,WIDE)),L({tend:.3f}));')

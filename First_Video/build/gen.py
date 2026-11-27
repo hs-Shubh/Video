@@ -277,8 +277,22 @@ for a, b, v in cues:
         prev = v
 if prev != "X":
     hj.append(f'tl.set("#h-m{prev}",{{opacity:0}},{TOTAL - 0.9:.3f}); tl.set("#h-mX",{{opacity:1}},{TOTAL - 0.9:.3f});')
+# version 3: the host appears only in the hook, proof, roadmap, together, payoff and CTA beats
+VIS = {"B01", "B02", "B04", "B11", "B12", "B16"}
+hj.append('tl.set("#h-wrap",{opacity:0},0);')
+hj.append('tl.fromTo("#h-wrap",{opacity:0,y:70},{opacity:1,y:0,duration:0.32,ease:"back.out(1.6)",immediateRender:false},2.8);')
+shown = True
+for bid in ORDER[1:]:
+    t = cuts[bid]
+    v = bid in VIS
+    if v and not shown:
+        hj.append(f'tl.fromTo("#h-wrap",{{opacity:0,y:70}},{{opacity:1,y:0,duration:0.32,ease:"back.out(1.6)",immediateRender:false}},{t + 0.1:.3f});')
+    elif shown and not v:
+        hj.append(f'tl.to("#h-wrap",{{opacity:0,y:50,duration:0.2,ease:"power2.in"}},{t - 0.05:.3f});')
+    shown = v
+hj.append(f'tl.to("#h-wrap",{{opacity:0,y:50,duration:0.2,ease:"power2.in"}},{TOTAL - 0.62:.3f});')
 # the loop: back to the exact frame 0 pose
-hj.append(f'tl.set("#h-head",{{x:0,y:0,rotation:0}},{TOTAL - 0.62:.3f}); tl.set("#h-eyes",{{scaleY:1}},{TOTAL - 0.62:.3f}); tl.set("#h-wrap",{{x:0,y:0,scale:1}},{TOTAL - 0.62:.3f});')
+hj.append(f'tl.set("#h-head",{{x:0,y:0,rotation:0}},{TOTAL - 0.62:.3f}); tl.set("#h-eyes",{{scaleY:1}},{TOTAL - 0.62:.3f}); tl.set("#h-wrap",{{x:0,scale:1}},{TOTAL - 0.62:.3f});')
 hj.append(f'tl.set({{}},{{}},{TOTAL - 0.01:.3f});')
 hj.append('window.__timelines["host"] = tl;')
 host_html = ("<template>\n<style>#root{position:absolute;inset:0;overflow:hidden}.abs{position:absolute}</style>\n"

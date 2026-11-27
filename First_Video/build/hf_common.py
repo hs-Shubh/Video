@@ -57,8 +57,8 @@ CSS = r"""
 .laptop-base{position:absolute;left:30px;top:766px;width:1020px;height:24px;border-radius:2px 2px 18px 18px;
   background:linear-gradient(#3a4256,#202636);box-shadow:0 18px 40px rgba(0,0,0,.5)}
 .laptop-notch{position:absolute;left:470px;top:766px;width:140px;height:9px;border-radius:0 0 9px 9px;background:#151a26}
-.screen{position:absolute;left:74px;top:164px;width:932px;height:582px;border-radius:12px;overflow:hidden;background:#0b0f1a}
-.push,.zoom{position:absolute;left:0;top:0;width:932px;height:582px}
+.screen{position:absolute;left:24px;top:112px;width:1032px;height:850px;border-radius:28px;overflow:hidden;background:radial-gradient(120% 90% at 20% 10%,#22304f 0%,#141c33 50%,#0c1222 100%);box-shadow:0 2px 6px rgba(0,0,0,.35),0 24px 60px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.10)}
+.push{position:absolute;left:0;top:0;width:1032px;height:850px}.zoom{position:absolute;left:0;top:0;width:932px;height:582px;overflow:hidden;border-radius:6px}
 .wall{position:absolute;inset:0;background:radial-gradient(120% 90% at 20% 10%,#2a3a63 0%,#16213b 45%,#0d1324 100%)}
 .wall::after{content:"";position:absolute;left:-10%;top:55%;width:120%;height:70%;border-radius:50%;
   background:radial-gradient(closest-side,rgba(255,159,28,.10),rgba(255,159,28,0))}
@@ -145,14 +145,18 @@ function hide(sel, t){ tl.set(sel,{opacity:0},L(t)); }
 function typeText(sel, text, t, cps){ const d=Math.max(0.2,text.length/(cps||30)); tl.fromTo(sel,{text:""},{text:text,duration:d,ease:"none"},L(t)); return t+d; }
 function cursorTo(id, t, x, y, d){ tl.to("#"+id,{x:x,y:y,duration:(d||0.5),ease:"power2.inOut"},L(t)); }
 function clickAt(rid, t, x, y){ tl.fromTo("#"+rid,{x:x,y:y,scale:0.3,opacity:0.9},{scale:1.5,opacity:0,duration:0.38,ease:"power2.out",immediateRender:false},L(t)); }
-const SW=932, SH=582;
-function zoomTo(id, t, px, py, s, d){
-  s=s||2; d=d||0.4;
-  let x=SW/2 - s*px, y=SH/2 - s*py;
-  x=Math.min(0,Math.max(SW - s*SW, x)); y=Math.min(0,Math.max(SH - s*SH, y));
-  tl.to("#"+id,{scale:s,x:x,y:y,duration:d,ease:"power2.inOut",transformOrigin:"0 0"},L(t));
+const SW=932, SH=582, VW=1032, VH=850, BASE=VW/SW, WIDE=1.2;
+function camState(px, py, s){
+  const e=s*BASE; let x=VW/2 - e*px, y=VH/2 - e*py;
+  x = (e*SW>=VW) ? Math.min(0,Math.max(VW - e*SW, x)) : (VW - e*SW)/2;
+  y = (e*SH>=VH) ? Math.min(0,Math.max(VH - e*SH, y)) : (VH - e*SH)/2;
+  return {scale:e, x:x, y:y};
 }
-function zoomOut(id, t, d){ tl.to("#"+id,{scale:1,x:0,y:0,duration:(d||0.4),ease:"power2.inOut",transformOrigin:"0 0"},L(t)); }
+function zoomTo(id, t, px, py, s, d){
+  const c=camState(px,py,Math.max(s||2,WIDE)); tl.to("#"+id,Object.assign({duration:(d||0.4),ease:"power2.inOut",transformOrigin:"0 0"},c),L(t));
+}
+function zoomOut(id, t, d){ tl.to("#"+id,Object.assign({duration:(d||0.4),ease:"power2.inOut",transformOrigin:"0 0"},camState(SW/2,SH/2,WIDE)),L(t)); }
+function camCut(id, t, px, py, s){ tl.set("#"+id,Object.assign({transformOrigin:"0 0"},camState(px,py,s)),L(t)); }
 function tick(sel, t){ tl.fromTo(sel,{opacity:0,scale:0.4},{opacity:1,scale:1,duration:7*F,ease:"back.out(3)"},L(t)); }
 function counter(sel, t0, t1, suffix){ const o={v:0}; const el=document.querySelector(sel);
   tl.fromTo(o,{v:0},{v:100,duration:t1-t0,ease:"power1.inOut",onUpdate:()=>{ el.textContent=Math.round(o.v)+(suffix||""); }},L(t0)); }
