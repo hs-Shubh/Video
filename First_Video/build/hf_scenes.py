@@ -22,16 +22,10 @@ class Sc:
     def auto_camera(self):
         """Hard reframe cuts about every 2.2 s wherever the scene has no zoom move of its own."""
         busy = []
-        z = sorted([(float(m.group(2)), m.group(1)) for m in _re.finditer(r'(zoomTo|zoomOut)\("[^"]+",([0-9.]+)', "\n".join(self.j))])
-        cur = None
-        for t, kind in z:
-            if kind == "zoomTo" and cur is None:
-                cur = t - 0.2
-            elif kind == "zoomOut" and cur is not None:
-                busy.append((cur, t + 0.5)); cur = None
-        if cur is not None:
-            busy.append((cur, self.s0 + self.dur))
-        step = getattr(self, "cam_step", 2.2)
+        for m in _re.finditer(r'(zoomTo|zoomOut)\("[^"]+",([0-9.]+)', "\n".join(self.j)):
+            t0 = float(m.group(2))
+            busy.append((t0 - 0.2, t0 + (1.7 if m.group(1) == "zoomTo" else 0.5)))
+        step = getattr(self, "cam_step", 2.0)
         t, k, out = self.s0 + getattr(self, "cam_start", 1.9), 0, []
         end = self.s0 + self.dur - 0.7
         while t < end:

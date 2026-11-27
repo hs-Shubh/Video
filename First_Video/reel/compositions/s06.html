@@ -122,7 +122,8 @@ function counter(sel, t0, t1, suffix){ const o={v:0}; const el=document.querySel
   tl.fromTo(o,{v:0},{v:100,duration:t1-t0,ease:"power1.inOut",onUpdate:()=>{ el.textContent=Math.round(o.v)+(suffix||""); }},L(t0)); }
 
 camCut("s06-zoom",31.633,250,170,1.65);
-camCut("s06-zoom",36.083,680,330,1.2);
+camCut("s06-zoom",34.633,680,330,1.2);
+camCut("s06-zoom",36.633,466,300,1.55);
 gsap.set("#s06-zoom",Object.assign({transformOrigin:"0 0"},camState(SW/2,SH/2,WIDE)));
 tl.fromTo("#s06-push",{scale:1},{scale:1.03,duration:7.917,ease:"none",transformOrigin:"50% 50%"},0);
 gsap.set("#s06-cur",{x:0,y:0,opacity:0});

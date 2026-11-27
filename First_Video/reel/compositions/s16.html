@@ -125,7 +125,8 @@ function counter(sel, t0, t1, suffix){ const o={v:0}; const el=document.querySel
   tl.fromTo(o,{v:0},{v:100,duration:t1-t0,ease:"power1.inOut",onUpdate:()=>{ el.textContent=Math.round(o.v)+(suffix||""); }},L(t0)); }
 
 camCut("s16-zoom",98.300,250,170,1.65);
-camCut("s16-zoom",100.500,680,330,1.2);
+camCut("s16-zoom",100.300,680,330,1.2);
+camCut("s16-zoom",102.300,466,300,1.55);
 gsap.set("#s16-zoom",Object.assign({transformOrigin:"0 0"},camState(SW/2,SH/2,WIDE)));
 gsap.set("#s16e-clip0,#s16e-clip1,#s16e-clip2,#s16e-clip3,#s16e-clip4,#s16e-clip5,#s16e-vo,#s16e-mus,#s16e-previmg,#s16e-prevsub,#s16e-sub0,#s16e-sub1,#s16e-sub2,#s16e-sub3,#s16e-sub4,#s16e-sub5,#s16e-sub6,#s16e-sub7,#s16e-sfx0,#s16e-sfx1,#s16e-sfx2,#s16e-sfx3",{opacity:1});
 gsap.set("#s16r-tclip0, #s16r-taud0",{opacity:1});
