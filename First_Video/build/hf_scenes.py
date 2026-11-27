@@ -96,7 +96,7 @@ class Sc:
 # ---------------------------------------------------------------- shared screens
 def desktop_two_windows(p, menu_app="Edits"):
     ed = win(f"{p}-wE", 16, 36, 540, 318, "Edits", edits_editor(f"{p}e", 540, 290), "#161a23")
-    rs = win(f"{p}-wR", 392, 196, 524, 318, "Resolve", resolve_ui(f"{p}r", 524, 290, menu=False), "#1a1c21")
+    rs = win(f"{p}-wR", 392, 196, 524, 318, "DaVinci Resolve", resolve_ui(f"{p}r", 524, 290, menu=False), "#1f1f22")
     return f'<div class="wall"></div>{menubar(menu_app)}{ed}{rs}{dock(p)}'
 
 
@@ -458,7 +458,7 @@ def s09(c):
     for i, cmd in enumerate(CMDS):
         lines += (f'<div class="tline" style="white-space:pre-wrap"><span style="color:#e9a35a">&gt;</span> <span id="{p}-cmd{i}"></span></div>'
                   f'<div class="tline tdim" id="{p}-out{i}" style="opacity:0"><span class="tok">&#10003;</span> {CMD_OUT[i]}</div>')
-    rs = win(f"{p}-wR", 16, 36, 560, 360, "Resolve", resolve_ui(f"{p}r", 560, 332, menu=False), "#1a1c21")
+    rs = win(f"{p}-wR", 16, 36, 560, 360, "DaVinci Resolve", resolve_ui(f"{p}r", 560, 332, menu=False), "#1f1f22")
     tm = win(f"{p}-wT", 300, 150, 616, 330, "Terminal", claude_code_term(p, lines), "#0c0f16")
     new = (f'<div class="abs" id="{p}-portal" style="inset:0;clip-path:circle(0px at 466px 291px)">'
            f'<div class="wall" style="filter:hue-rotate(-12deg)"></div>{menubar("Terminal")}{rs}{tm}{dock(p)}</div>'
@@ -499,11 +499,11 @@ def s09(c):
 # ---------------------------------------------------------------- S10 Resolve 2
 def s10(c):
     p = c.p
-    rs = win(f"{p}-wR", 8, 30, 916, 544, "Resolve", resolve_ui(f"{p}r", 916, 516, menu=True), "#1a1c21")
+    rs = win(f"{p}-wR", 8, 30, 916, 544, "DaVinci Resolve", resolve_ui(f"{p}r", 916, 516, menu=True), "#1f1f22")
     lines = (f'<div class="tline"><span style="color:#e9a35a">&gt;</span> <span id="{p}-mcp"></span></div>'
              f'<div class="tline" id="{p}-mo" style="opacity:0">  davinci  <span class="tok">&#10003; connected</span></div>')
     tm = win(f"{p}-wT", 360, 250, 540, 250, "Terminal", claude_code_term(p, lines), "#0c0f16")
-    c.laptop(f'<div class="wall"></div>{menubar("Resolve")}{rs}{tm}')
+    c.laptop(f'<div class="wall"></div>{menubar("DaVinci Resolve")}{rs}{tm}')
     for i in range(4):
         c.js(f'tl.set("#{p}r-tclip{i}, #{p}r-taud{i}",{{opacity:1}},0);')
     c.js(f'tl.set("#{p}r-viewimg",{{opacity:1}},0); tl.set("#{p}-wT",{{opacity:0}},0);')
@@ -568,12 +568,12 @@ P2 = ("In Edits, create a 9:16 vertical video under 45 seconds from the render i
 
 def s11(c):
     p = c.p
-    rs = win(f"{p}-wR", 6, 30, 456, 544, "Resolve", resolve_ui(f"{p}r", 456, 516, menu=False), "#1a1c21")
+    rs = win(f"{p}-wR", 6, 30, 456, 544, "DaVinci Resolve", resolve_ui(f"{p}r", 456, 516, menu=False), "#1f1f22")
     ed = win(f"{p}-wE", 470, 30, 456, 544, "Edits", edits_editor(f"{p}e", 456, 516, show_labels=False), "#161a23")
     arrow = (f'<svg class="abs" id="{p}-arr" style="left:330px;top:440px;opacity:0;z-index:30" width="270" height="80" viewBox="0 0 270 80">'
              f'<path id="{p}-arrp" d="M10 60 C 90 0, 180 0, 255 40" fill="none" stroke="#FF9F1C" stroke-width="6" stroke-linecap="round" stroke-dasharray="320" stroke-dashoffset="320"/>'
              f'<path d="M240 26 L258 42 L236 50" fill="none" stroke="#FF9F1C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>')
-    c.laptop(f'<div class="wall"></div>{menubar("Resolve")}{rs}{ed}{arrow}')
+    c.laptop(f'<div class="wall"></div>{menubar("DaVinci Resolve")}{rs}{ed}{arrow}')
     c.cursor(0, 0, hidden=True)
     tim, ttl, trn = c.trig("B11", "import"), c.trig("B11", "timeline"), c.trig("B11", "render")
     ted = c.trig("B11", "Edits")
@@ -696,7 +696,7 @@ def s14(c):
     p = c.p
     lines = (f'<div class="tline"><span style="color:#e9a35a">&gt;</span> <span class="tdim">/mcp</span></div>'
              f'<div class="tline"><span class="terr">bridge is not running</span></div>')
-    rs = win(f"{p}-wR", 16, 36, 560, 360, "Resolve", resolve_ui(f"{p}r", 560, 332, menu=False), "#1a1c21")
+    rs = win(f"{p}-wR", 16, 36, 560, 360, "DaVinci Resolve", resolve_ui(f"{p}r", 560, 332, menu=False), "#1f1f22")
     tm = win(f"{p}-wT", 330, 190, 580, 220, "Terminal", claude_code_term(p, lines), "#0c0f16")
     c.laptop(f'<div class="wall"></div>{menubar("Terminal")}{rs}{tm}{dock(p)}')
     c.cursor(0, 0, hidden=True)
@@ -722,8 +722,8 @@ def s15(c):
     circ = (f'<svg class="abs" style="left:262px;top:136px;z-index:26" width="410" height="260" viewBox="0 0 410 260">'
             f'<path id="{p}-circ" d="M205 14 C 330 10, 400 60, 396 130 C 392 205, 300 248, 196 246 C 90 244, 14 200, 16 128 C 18 60, 100 18, 214 22" '
             f'fill="none" stroke="#FF4D4D" stroke-width="7" stroke-linecap="round" stroke-dasharray="1100" stroke-dashoffset="1100"/></svg>')
-    rs = win(f"{p}-wR", 8, 30, 916, 544, "Resolve", resolve_ui(f"{p}r", 916, 516, menu=False), "#1a1c21")
-    c.laptop(f'<div class="wall"></div>{menubar("Resolve")}{rs}{pop}{circ}')
+    rs = win(f"{p}-wR", 8, 30, 916, 544, "DaVinci Resolve", resolve_ui(f"{p}r", 916, 516, menu=False), "#1f1f22")
+    c.laptop(f'<div class="wall"></div>{menubar("DaVinci Resolve")}{rs}{pop}{circ}')
     for i in range(4):
         c.js(f'tl.set("#{p}r-tclip{i}, #{p}r-taud{i}",{{opacity:1}},0);')
     c.js(f'tl.set("#{p}r-viewimg",{{opacity:1}},0);')
@@ -786,7 +786,7 @@ def img_win(wid, src, x, y, w, h, extra=""):
 
 def desktop_two_windows(p, menu_app="Edits"):
     ed = img_win(f"{p}-wE", FT + "edits_projects.png", 16, 36, 470, 339)
-    rs = win(f"{p}-wR", 392, 196, 524, 318, "Resolve", resolve_ui(f"{p}r", 524, 290, menu=False), "#1a1c21")
+    rs = win(f"{p}-wR", 392, 196, 524, 318, "DaVinci Resolve", resolve_ui(f"{p}r", 524, 290, menu=False), "#1f1f22")
     return f'<div class="wall"></div>{menubar(menu_app)}{ed}{rs}{dock(p)}'
 
 
@@ -937,3 +937,201 @@ def s01(c):
   o.v=0; tl.fromTo(o,{{v:0}},{{v:1,duration:0.4,onUpdate:place}},L({tset:.3f}));
   tl.fromTo(o,{{a:-1.5708}},{{a:-1.5708+Math.PI*0.9,duration:{max(0.5, c.s0 + c.dur - tset):.3f},ease:"none",onUpdate:place}},L({tset:.3f}));
   place(); }})();''')
+
+
+# =====================================================================================
+# Resolve, redrawn in the real app's layout (Edit page, Media Pool, dual viewer, V1/A1, page bar,
+# Workspace menu in the macOS menu bar, Deliver render queue). Generic drawing, no logos.
+# =====================================================================================
+RV_BG, RV_PANEL, RV_LINE, RV_TXT, RV_DIM = "#1f1f22", "#28282c", "#111114", "#c8c8cc", "#7c7c84"
+CLIPS = ["day1_01.mp4", "day1_02.mp4", "day1_03.mp4", "day1_04.mp4", "day1_05.mp4", "day1_06.mp4"]
+
+
+def _rv_icon_row(n, size=9, gap=7, col="#8a8a92"):
+    return "".join(f'<div style="width:{size}px;height:{size}px;border-radius:2px;border:1.5px solid {col};flex:none"></div>' for _ in range(n))
+
+
+def resolve_ui(p, w, h, menu=True):
+    s = min(1.0, w / 916)             # scale for small windows
+    fs = max(7, round(10 * s + 1))     # ui font size
+    tb = round(26 * s + 6)             # top toolbar
+    pb = round(24 * s + 6)             # page bar
+    body_h = h - tb - pb
+    up_h = int(body_h * 0.52)          # media pool and viewers
+    pool_w = int(w * 0.30)
+    vx = pool_w
+    vw = w - pool_w
+    parts = []
+    t = f'font:600 {fs}px Inter, sans-serif;color:{RV_TXT}'
+    d = f'font:500 {fs}px Inter, sans-serif;color:{RV_DIM}'
+    # top toolbar
+    left = "".join(f'<span style="display:flex;align-items:center;gap:4px">{_rv_icon_row(1, round(9 * s + 2))}{x}</span>'
+                   for x in ("Media Pool", "Effects", "Edit Index")[: 3 if w > 600 else 1])
+    right = "".join(f'<span style="display:flex;align-items:center;gap:4px">{_rv_icon_row(1, round(9 * s + 2))}{x}</span>'
+                    for x in ("Mixer", "Metadata", "Inspector")[: 3 if w > 600 else 1])
+    parts.append(f'<div style="position:absolute;left:0;right:0;top:0;height:{tb}px;background:{RV_PANEL};border-bottom:1px solid {RV_LINE};'
+                 f'display:flex;align-items:center;justify-content:space-between;padding:0 {round(10 * s + 4)}px;{d}">'
+                 f'<div style="display:flex;gap:{round(14 * s + 4)}px">{left}</div>'
+                 f'<div style="{t}">Day 1 Demo <span style="{d}">Edited</span></div>'
+                 f'<div style="display:flex;gap:{round(14 * s + 4)}px">{right}</div></div>')
+    # media pool: bin list plus clip grid
+    bin_w = int(pool_w * 0.28)
+    cols = 2 if pool_w < 260 else 3
+    th_w = int((pool_w - bin_w - 10 - (cols - 1) * 6) / cols)
+    th_h = int(th_w * 0.56)
+    grid = ""
+    for i in range(6):
+        gx = bin_w + 6 + (i % cols) * (th_w + 6)
+        gy = 8 + (i // cols) * (th_h + round(14 * s + 6))
+        grid += (f'<div id="{p}-pool{i}" style="position:absolute;left:{gx}px;top:{gy}px;width:{th_w}px">{thumb(i, th_w, th_h, "border-radius:2px")}'
+                 f'<div style="font:500 {max(6, fs - 2)}px Inter, sans-serif;color:{RV_DIM};white-space:nowrap;overflow:hidden;margin-top:2px">{CLIPS[i]}</div></div>')
+    parts.append(f'<div style="position:absolute;left:0;top:{tb}px;width:{pool_w}px;height:{up_h}px;background:{RV_BG};border-right:1px solid {RV_LINE};overflow:hidden">'
+                 f'<div style="position:absolute;left:0;top:0;width:{bin_w}px;bottom:0;background:{RV_PANEL};border-right:1px solid {RV_LINE};padding:{round(6 * s + 2)}px;{d}">'
+                 f'<div style="color:{RV_TXT}">Master</div><div style="margin-top:4px">Footage</div></div>{grid}</div>')
+    # dual viewer with timecode and transport
+    hv = vw // 2
+    vh = up_h - round(36 * s + 10)
+    def viewer(x, img_id, tc, label):
+        ww = hv - 12
+        hh = min(vh - 18, int(ww * 9 / 16))
+        return (f'<div style="position:absolute;left:{x}px;top:0;width:{hv}px;height:{up_h}px">'
+                f'<div style="position:absolute;left:6px;right:6px;top:3px;display:flex;justify-content:space-between;{d}"><span>{label}</span><span style="color:{RV_TXT};font-family:JetBrains Mono, monospace">{tc}</span></div>'
+                f'<div style="position:absolute;left:6px;top:{round(14 * s + 6)}px;width:{ww}px;height:{hh}px;background:#0b0b0d;overflow:hidden">'
+                f'<div id="{img_id}" style="position:absolute;inset:0;background:{THUMBS[2]};opacity:0"></div></div>'
+                f'<div style="position:absolute;left:0;right:0;top:{round(14 * s + 6) + hh + 6}px;display:flex;justify-content:center;gap:{round(8 * s + 2)}px">{_rv_icon_row(5, round(8 * s + 2))}</div></div>')
+    parts.append(f'<div style="position:absolute;left:{vx}px;top:{tb}px;width:{vw}px;height:{up_h}px;background:{RV_BG}">'
+                 + viewer(0, f"{p}-srcimg", "00:00:00:00", "day1_01.mp4") + viewer(hv, f"{p}-viewimg", "01:00:00:00", "Day 1")
+                 + f'<div style="position:absolute;left:{hv}px;top:0;width:1px;bottom:0;background:{RV_LINE}"></div></div>')
+    # timeline
+    ty = tb + up_h
+    th = body_h - up_h
+    hdr = round(70 * s + 20)
+    trk = max(14, round(30 * s + 4))
+    rows = (("V2", "Video 2", False), ("V1", "Video 1", True), ("A1", "Audio 1", True))
+    tl_html = (f'<div style="position:absolute;left:0;right:0;top:0;height:{round(16 * s + 6)}px;background:{RV_PANEL};border-bottom:1px solid {RV_LINE};'
+               f'display:flex;align-items:center;gap:{round(8 * s + 2)}px;padding-left:{hdr + 6}px">{_rv_icon_row(8, round(8 * s + 2))}</div>')
+    ry = round(16 * s + 6)
+    tl_html += (f'<div style="position:absolute;left:{hdr}px;right:0;top:{ry}px;height:{round(12 * s + 4)}px;border-bottom:1px solid {RV_LINE};'
+                f'font:500 {max(6, fs - 2)}px JetBrains Mono, monospace;color:{RV_DIM};display:flex;gap:{int((w - hdr) / 4) - 50}px;padding-left:4px">'
+                + "".join(f"<span>01:00:{k * 4:02d}:00</span>" for k in range(4)) + "</div>")
+    y0 = ry + round(12 * s + 4) + 4
+    for r, (tag, name, used) in enumerate(rows):
+        yy = y0 + r * (trk + 3)
+        tl_html += (f'<div style="position:absolute;left:0;top:{yy}px;width:{hdr - 2}px;height:{trk}px;background:{RV_PANEL};display:flex;align-items:center;gap:5px;padding-left:5px;{d}">'
+                    f'<b style="color:{RV_TXT};font-weight:700">{tag}</b>{name if hdr > 60 else ""}</div>'
+                    f'<div style="position:absolute;left:{hdr}px;right:4px;top:{yy}px;height:{trk}px;background:rgba(255,255,255,.025)"></div>')
+    lane_w = w - hdr - 10
+    cx = hdr + 2
+    for i, f in enumerate((0.21, 0.16, 0.23, 0.18)):
+        cw = lane_w * f * 0.95
+        yv = y0 + 1 * (trk + 3)
+        ya = y0 + 2 * (trk + 3)
+        tl_html += (f'<div id="{p}-tclip{i}" style="position:absolute;left:{cx:.0f}px;top:{yv}px;width:{cw - 2:.0f}px;height:{trk}px;opacity:0;overflow:hidden;'
+                    f'background:#3a5f8f;border:1px solid #6d8fbd;border-radius:2px;display:flex">'
+                    f'{thumb(i, int(trk * 1.6), trk - 2, "border-radius:0;flex:none")}'
+                    f'<span style="font:600 {max(6, fs - 2)}px Inter, sans-serif;color:#e6eefa;padding:1px 4px;white-space:nowrap">{CLIPS[i]}</span></div>'
+                    f'<svg id="{p}-taud{i}" style="position:absolute;left:{cx:.0f}px;top:{ya}px;opacity:0" width="{cw - 2:.0f}" height="{trk}">'
+                    f'<rect width="100%" height="100%" rx="2" fill="#2f6650" stroke="#5c9a7e"/><path d="{wave_path(cw - 2, trk, 5 + i, amp=.7)}" fill="#9fd8bb"/></svg>')
+        cx += lane_w * f
+    tl_html += f'<div style="position:absolute;left:{hdr + 2}px;top:{ry}px;width:1.5px;bottom:2px;background:#e2523f"></div>'
+    parts.append(f'<div style="position:absolute;left:0;right:0;top:{ty}px;height:{th}px;background:{RV_BG};border-top:1px solid {RV_LINE};overflow:hidden">{tl_html}</div>')
+    # render queue (Deliver), shown for the render step
+    rq_w = int(w * 0.34)
+    parts.append(f'<div id="{p}-rq" style="position:absolute;right:0;top:{tb}px;width:{rq_w}px;height:{body_h}px;background:{RV_PANEL};border-left:1px solid {RV_LINE};opacity:0;padding:{round(8 * s + 2)}px">'
+                 f'<div style="{t}">Render Queue</div>'
+                 f'<div style="margin-top:{round(8 * s + 2)}px;background:{RV_BG};border:1px solid {RV_LINE};border-radius:3px;padding:{round(6 * s + 2)}px">'
+                 f'<div style="display:flex;justify-content:space-between;{t}"><span>Job 1  Day 1</span><span id="{p}-rqpct">0%</span></div>'
+                 f'<div style="{d};margin-top:3px">~/Exports</div>'
+                 f'<div style="margin-top:5px;height:{max(3, round(5 * s))}px;background:rgba(255,255,255,.1);border-radius:2px">'
+                 f'<div id="{p}-rqbar" style="width:100%;height:100%;background:#e8a33d;border-radius:2px;transform:scaleX(0);transform-origin:0 50%"></div></div></div></div>')
+    # page bar
+    pages = ["Media", "Cut", "Edit", "Fusion", "Color", "Fairlight", "Deliver"]
+    pg = "".join(f'<div id="{p}-pg{k}" style="display:flex;flex-direction:column;align-items:center;gap:2px;{t if k == 2 else d}">'
+                 f'{_rv_icon_row(1, round(10 * s + 3), col=("#e8a33d" if k == 2 else "#8a8a92"))}{x if w > 600 else ""}</div>' for k, x in enumerate(pages))
+    parts.append(f'<div style="position:absolute;left:0;right:0;bottom:0;height:{pb}px;background:{RV_PANEL};border-top:1px solid {RV_LINE};'
+                 f'display:flex;justify-content:center;align-items:center;gap:{round(26 * s + 6)}px">{pg}</div>')
+    return "".join(parts)
+
+
+RES_MENUS = ["DaVinci Resolve", "File", "Edit", "Trim", "Timeline", "Clip", "Mark", "View", "Playback", "Workspace", "Help"]
+
+
+def resolve_menubar(p):
+    items, x = [], 34
+    pos = {}
+    for m in RES_MENUS:
+        wpx = int(len(m) * 6.9 + 14)
+        pos[m] = (x, wpx)
+        items.append(f'<span id="{p}-mb-{m.split()[0]}" style="position:absolute;left:{x}px;top:0;height:24px;line-height:24px;width:{wpx}px;text-align:center;border-radius:4px;'
+                     f'font:{700 if m == "DaVinci Resolve" else 500} 12px Inter, sans-serif;color:#e8ecf5">{m}</span>')
+        x += wpx
+    return (f'<div class="menubar" style="display:block;padding:0"><div class="mb-dot" style="position:absolute;left:14px;top:6px"></div>{"".join(items)}</div>'), pos
+
+
+def s10(c):
+    p = c.p
+    mb, pos = resolve_menubar(p)
+    wx, wwid = pos["Workspace"]
+    items = ["Single Viewer Mode", "Dual Screen", "Full Screen Window", "Reset UI Layout", "Layout Presets", "Workflow Integrations", "Scripts", "Console"]
+    dd = "".join(f'<div id="{p}-dd{k}" style="margin:1px 5px;padding:4px 10px;border-radius:5px;display:flex;justify-content:space-between">'
+                 f'<span>{it}</span><span style="color:#8a8f9c">{"&#8250;" if it in ("Layout Presets", "Workflow Integrations", "Scripts") else ""}</span></div>' for k, it in enumerate(items))
+    menu = (f'<div id="{p}-dd" style="position:absolute;left:{wx}px;top:24px;width:200px;padding:5px 0;border-radius:8px;background:rgba(44,46,54,.97);'
+            f'box-shadow:0 10px 30px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);opacity:0;z-index:20;font:500 12px Inter, sans-serif;color:#e8ecf5">{dd}</div>'
+            f'<div id="{p}-sub" style="position:absolute;left:{wx + 196}px;top:{24 + 5 + 6 * 24}px;width:190px;padding:5px 0;border-radius:8px;background:rgba(44,46,54,.97);'
+            f'box-shadow:0 10px 30px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);opacity:0;z-index:21;font:500 12px Inter, sans-serif;color:#e8ecf5">'
+            f'<div style="margin:1px 5px;padding:4px 10px;color:#8a8f9c">Edit</div>'
+            f'<div id="{p}-bridge" style="margin:1px 5px;padding:4px 10px;border-radius:5px">Claude_MCP_Bridge</div></div>')
+    rs = win(f"{p}-wR", 8, 30, 916, 544, "DaVinci Resolve", resolve_ui(f"{p}r", 916, 516), "#1f1f22")
+    lines = (f'<div class="tline"><span style="color:#e9a35a">&gt;</span> <span id="{p}-mcp"></span></div>'
+             f'<div class="tline" id="{p}-mo" style="opacity:0">  davinci  <span class="tok">&#10003; connected</span></div>')
+    tm = win(f"{p}-wT", 360, 250, 540, 250, "Terminal", claude_code_term(p, lines), "#0c0f16")
+    c.laptop(f'<div class="wall"></div>{rs}{tm}{mb}{menu}')
+    for i in range(4):
+        c.js(f'gsap.set("#{p}r-tclip{i}, #{p}r-taud{i}",{{opacity:1}});')
+    c.js(f'gsap.set("#{p}r-viewimg, #{p}r-srcimg",{{opacity:1}}); gsap.set("#{p}-wT",{{opacity:0}});')
+    tws, tsc, tbr = c.trig("B10", "Workspace"), c.trig("B10", "Scripts"), c.trig("B10", "Claude")
+    tclk = c.ctx.sfx["menu_click"]
+    tm_, tco = c.trig("B10", "/mcp"), c.trig("B10", "connected")
+    wsx, wsy = wx + wwid / 2, 12
+    scx, scy = wx + 80, 24 + 5 + 6 * 24 + 12
+    bx, by = wx + 196 + 80, 24 + 5 + 6 * 24 + 5 + 24 + 12
+    c.cursor(500, 300)
+    c.js(f'cursorTo("{p}-cur",{tws - 0.45:.3f},{wsx:.0f},{wsy},0.45); clickAt("{p}-rip",{tws:.3f},{wsx:.0f},{wsy});')
+    s = 1.7
+    zx = min(0, max(SW - s * SW, SW / 2 - s * (wx + 150))); zy = min(0, max(SH - s * SH, SH / 2 - s * 130))
+    c.js(f'zoomTo("{p}-zoom",{tws - 0.3:.3f},{wx + 150},130,{s},0.4);')
+    c.js(f'tl.to("#{p}-mb-Workspace",{{backgroundColor:"rgba(255,255,255,.2)",duration:0.06}},L({tws:.3f}));')
+    c.js(f'tl.fromTo("#{p}-dd",{{opacity:0}},{{opacity:1,duration:0.12,immediateRender:false}},L({tws + 0.05:.3f}));')
+    c.js(f'cursorTo("{p}-cur",{tsc - 0.35:.3f},{scx:.0f},{scy:.0f},0.35); tl.to("#{p}-dd6",{{backgroundColor:"#2f6fdb",duration:0.06}},L({tsc:.3f}));')
+    c.js(f'tl.fromTo("#{p}-sub",{{opacity:0}},{{opacity:1,duration:0.12,immediateRender:false}},L({tsc + 0.05:.3f}));')
+    c.js(f'cursorTo("{p}-cur",{tbr - 0.35:.3f},{bx:.0f},{by:.0f},0.4); tl.to("#{p}-bridge",{{backgroundColor:"#2f6fdb",duration:0.06}},L({tbr:.3f}));')
+    c.add(f'<div class="abs" id="{p}-ring" style="left:0;top:0;width:150px;height:44px;border-radius:22px;border:4px solid #FF9F1C;opacity:0;z-index:44"></div>')
+    def fx(x): return 74 + zx + s * x
+    def fy(y): return 164 + zy + s * y
+    def ring(t, x, y, wpx):
+        return f'tl.to("#{p}-ring",{{x:{x:.0f},y:{y:.0f},width:{wpx:.0f},opacity:1,duration:0.2,ease:"power2.out"}},L({t:.3f}));'
+    c.js(ring(tws, fx(wx) - 6, fy(wsy) - 22, s * wwid + 12))
+    c.js(ring(tsc, fx(wx) - 2, fy(scy) - 22, s * 200 + 4))
+    c.js(ring(tbr, fx(wx + 196) - 2, fy(by) - 22, s * 190 + 4))
+    c.js(f'clickAt("{p}-rip",{tclk:.3f},{bx:.0f},{by:.0f}); leave("#{p}-ring",{tclk + 0.3:.3f});')
+    c.js(f'tl.to("#{p}-dd, #{p}-sub",{{opacity:0,duration:0.12}},L({tclk + 0.25:.3f})); tl.to("#{p}-mb-Workspace",{{backgroundColor:"rgba(255,255,255,0)",duration:0.1}},L({tclk + 0.25:.3f}));')
+    c.js(f'zoomOut("{p}-zoom",{tclk + 0.2:.3f},0.4);')
+    c.js(f'tl.fromTo("#{p}-wT",{{opacity:0,y:20}},{{opacity:1,y:0,duration:0.25,ease:"power3.out",immediateRender:false}},L({tm_ - 0.25:.3f}));')
+    c.js(f'typeText("#{p}-mcp","/mcp",{tm_:.3f},14); show("#{p}-mo",{tco:.3f});')
+    c.js(f'zoomTo("{p}-zoom",{tco - 0.2:.3f},640,420,1.6,0.4);')
+    c.badge(f"{p}-bd", "R2", tws)
+    x, y = ZR[0], 972
+    def ch(i):
+        return f'<svg id="{p}-ch{i}" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:.35;flex:none"><path d="M9 5l7 7-7 7"/></svg>'
+    bc = (f'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font:700 38px/1.35 Poppins, sans-serif">'
+          f'<span id="{p}-b0" style="opacity:.35">Workspace</span>{ch(0)}<span id="{p}-b1" style="opacity:.35">Scripts</span>{ch(1)}'
+          f'<span id="{p}-b2" style="opacity:.35">Claude_MCP_Bridge</span></div>')
+    c.add(f'<div class="glass abs" id="{p}-bc" style="left:{x}px;top:{y}px;width:644px;padding:22px 30px;{c.glass_style(x, y)}">{bc}</div>')
+    c.js(f'gsap.set("#{p}-bc",{{opacity:0}}); enter("#{p}-bc",{tws:.3f}); leave("#{p}-bc",{tm_ - 0.25:.3f});')
+    for i, t in enumerate((tws, tsc, tbr)):
+        c.js(f'tl.to("#{p}-b{i}",{{opacity:1,color:"#FF9F1C",duration:0.15}},L({t:.3f}));')
+        if i:
+            c.js(f'tl.to("#{p}-b{i - 1}",{{color:"#ffffff",duration:0.15}},L({t:.3f})); tl.to("#{p}-ch{i - 1}",{{opacity:1,duration:0.15}},L({t:.3f}));')
+    c.add(f'<div class="monobox glass" id="{p}-mb" style="left:{x}px;top:{y}px;width:300px;{c.glass_style(x, y)}"><span id="{p}-mbt"></span><span class="caret"></span></div>')
+    c.js(f'gsap.set("#{p}-mb",{{opacity:0}}); enter("#{p}-mb",{tm_:.3f}); typeText("#{p}-mbt","/mcp",{tm_ + 0.05:.3f},14);')
+    c.pill(f"{p}-ok", "davinci connected", 0, 830, tco, "ok", center_row=True)
