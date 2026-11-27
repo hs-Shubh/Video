@@ -1,72 +1,260 @@
-# Screen recording guide (to replace the recreated screens)
+# Edits and DaVinci Resolve capture guide
 
-The rest of the reel stays as it is: the voice timing, captions, host, overlays, glass cards, sound and mix. Only the picture inside the MacBook frame changes from recreated screens to your real recordings. I fit each recording to its beat with cursor follow zoom, speed ramps and the token mask.
+One document with everything you need to capture. Follow it top to bottom.
 
-## 1. Set up your Mac once, before recording
+## What changes and what stays
 
-1. **Do Not Disturb on.** Quit Mail, Messages, Slack and anything else that can pop up.
-2. **Dark mode on:** System Settings > Appearance > Dark.
-3. **Hide personal details:**
-   - Terminal: before each take run `PROMPT='%% '` (zsh) so the prompt shows only `%`, not your user name or Mac name.
-   - Use a demo folder: create `~/Footage/day1` with 4 to 6 short clips, and an empty `~/Exports`.
-   - Close Finder windows that show your name in the sidebar.
-   - Claude Desktop shows your name or email in the bottom left of the sidebar. Collapse the sidebar if you can. If not, leave it and tell me: I will cover it with a solid mask.
-   - Edits shows your Instagram handle. Tell me if you want it masked.
-4. **Bigger text so it reads on a phone:**
-   - Terminal: Settings > Profiles > Text > font size 18 or larger.
-   - Claude Desktop: View > Zoom In once or twice.
-   - Resolve and Edits: leave them at normal size; I zoom into them.
-5. **Clean desktop:** hide desktop icons, use a plain dark wallpaper, and keep only the needed app windows open.
-6. **Recording tool:** press Cmd+Shift+5, choose **Record Entire Screen**. Under Options, turn on **Show Mouse Clicks**, and set the microphone to **None**.
+| Stays as it is now (do not record) | Gets your real capture |
+|---|---|
+| Terminal and Claude Code windows (commands, `/mcp`, error line) | Instagram Edits app screens |
+| Claude Desktop chat window | DaVinci Resolve screens |
+| Host, captions, overlays, glass cards, sound, voice timing | The desktop that shows both apps side by side |
 
-## 2. How to record each take
+You can give me **screen recordings (best)** or **screenshots (works too)**. Every step below lists both. With screenshots I animate the cursor, clicks, zooms and the timeline filling between your "before" and "after" images. With recordings the motion is fully real.
 
-- One take per file. Wait **2 seconds** before the first action and **2 seconds** after the last one.
-- Move the mouse calmly and **pause about 1 second** before each click, so I can zoom on the click.
-- Natural speed is fine. I speed up waits (loading, rendering) with speed ramps.
-- If something goes wrong, start that file again. Don't cut it yourself.
+---
 
-## 3. The recordings
+## Part 0. Prepare your Mac once (15 minutes)
 
-Each beat shows how much screen time it has in the reel, so you know what must be visible. Raw takes can be longer.
+1. **Apps.**
+   - Instagram Edits for Mac, latest version, signed in. It needs an Apple silicon Mac (M1 or later).
+   - DaVinci Resolve, free edition, latest version. Note your exact version number (Resolve menu > About DaVinci Resolve) and tell me.
+   - The Edits and Resolve connections from the reel already set up and working. You will show the setup steps again, but they must really work for the demo parts.
+2. **Demo footage.** In Finder, create:
+   - `Footage/day1` in your home folder, with 4 to 6 short clips (5 to 15 s each). Anything nice looking: travel, food, city.
+   - An empty `Exports` folder in your home folder.
+3. **A demo project in Resolve.** Open Resolve, create a new project named `Day 1 Demo`, leave it empty, quit Resolve.
+4. **Look.**
+   - System Settings > Appearance > **Dark**.
+   - Plain dark wallpaper, desktop icons hidden (Finder > Settings > General: untick the items under "Show these items on the desktop").
+   - Dock: keep it visible, remove apps you don't want seen.
+5. **Privacy.**
+   - **Do Not Disturb on** (Control Center > Focus).
+   - Quit Mail, Messages, WhatsApp, Slack and anything that can show a popup.
+   - Edits shows your Instagram handle and profile picture. If you don't want them seen, tell me and I'll cover them with a solid box.
+   - The Edits Access Token: capture it normally. I cover it with a solid box on every frame, then scan every frame. You never need to hide it yourself.
+6. **Screen size.** System Settings > Displays: keep the default resolution. Don't change it between captures.
 
-| ID | File name | Beat (screen time) | Record exactly this |
+## How to record
+
+- Press **Cmd+Shift+5** > **Record Entire Screen**. Under Options, turn on **Show Mouse Clicks**, set Microphone to **None**, and choose where to save.
+- To stop, click the stop button in the menu bar, or press Cmd+Ctrl+Esc.
+- One step per file. Wait **2 seconds** before the first action and **2 seconds** after the last.
+- Move the mouse calmly and **rest the pointer for 1 second** on each button before you click it.
+- Loading and rendering waits are fine: I speed them up.
+- If you make a mistake, record that file again from the start. Don't trim anything.
+
+## How to take screenshots (if recording doesn't work)
+
+- **Whole screen:** Cmd+Shift+3. Use this for every screenshot below, so all images match in size and position.
+- Don't move or resize the app window between the screenshots of one step. I need the "before" and "after" images to line up exactly.
+- Leave the mouse pointer out of the way at the edge of the screen. I draw my own pointer.
+- Rename each screenshot to the exact name in the step.
+
+---
+
+## Part A. Instagram Edits
+
+### A1. Download page and sign in (beat B05, about 6 s in the reel)
+
+Steps:
+1. Open Safari or Chrome and go to the Edits for Mac download page (`edits.instagram.com/desktop`). Scroll so the **Download** button is in the middle of the screen.
+2. Start recording.
+3. Rest on **Download**, click it.
+4. Open Edits. If it shows the sign in screen, rest on **Sign in with Instagram** and click it, then finish signing in.
+   - Already signed in? Then just open Edits and let its home screen load.
+5. Wait 2 s, stop.
+
+- Recording: `E01_edits_download.mov`
+- Screenshots:
+  - `E01_1_download_page.png`: the page with the Download button.
+  - `E01_2_signin.png`: the Edits sign in screen, if you can get it.
+  - `E01_3_home.png`: Edits home, signed in.
+
+### A2. Settings, Automation, Enable Automation Server (beat B06, about 7.6 s)
+
+Before you start, turn **Enable Automation Server OFF** so you can show it turning on.
+
+Steps:
+1. Edits open on its home or editor screen. Start recording.
+2. Open **Settings** (where Edits keeps it, for example the gear icon or the Edits menu > Settings), and rest 1 s.
+3. Click **Automation** and rest 1 s.
+4. Rest on the **Enable Automation Server** switch, click it ON, rest 2 s.
+5. Move to the **Copy** button for **Claude Code**, rest there 2 s. Don't click yet.
+6. Stop.
+
+- Recording: `E02_edits_settings.mov`
+- Screenshots:
+  - `E02_1_editor.png`: Edits before opening Settings.
+  - `E02_2_settings.png`: the Settings window, first page.
+  - `E02_3_automation_off.png`: the Automation page with the switch OFF.
+  - `E02_4_automation_on.png`: the same page with the switch ON.
+
+### A3. Copy button only (beat B07 start, about 1 s)
+
+Only the click on Copy. The Terminal and Claude parts stay as they are now.
+
+Steps:
+1. Settings > Automation open, switch ON. Start recording.
+2. Rest on **Copy** for Claude Code, click it. If it changes to "Copied" or similar, wait until that shows.
+3. Wait 2 s, stop.
+
+- Recording: `E03_edits_copy.mov`
+- Screenshots: `E03_1_copy_before.png` and `E03_2_copy_after.png` (only needed if the button changes after the click).
+
+### A4. Timeline filling from one prompt (beats B02 and B11 right side, about 5 s and 6 s)
+
+This is the most important capture. It is the proof.
+
+Steps:
+1. In Edits, open an empty project (no clips on the timeline). Make the Edits window full screen or as large as possible, with the timeline clearly visible.
+2. Start recording **before** you send the prompt, so the empty timeline is captured.
+3. In Claude Code or Claude Desktop, send this prompt (you can do it on another screen or quickly switch back):
+   `In Edits, create a 9:16 vertical video under 45 seconds from the render in ~/Exports. Add subtitles at the bottom center and choose an upbeat track from the library.`
+   (For this capture, any clips in `~/Exports` work. If the Resolve render from A/B is not there yet, copy 2 or 3 clips from `Footage/day1` into `Exports`.)
+4. Switch to Edits and keep recording while the clips, subtitles and music land on the timeline. Don't touch anything.
+5. When everything has stopped moving, wait 3 s, stop. 45 to 120 s raw is fine.
+
+- Recording: `E05_edits_timeline.mov`
+- Screenshots, all with the window in the same place:
+  - `E05_1_empty.png`: empty timeline.
+  - `E05_2_clips.png`: clips on the timeline (take it as soon as the clips appear).
+  - `E05_3_subtitles.png`: subtitles added.
+  - `E05_4_full.png`: everything done: clips, subtitles, music, sound effects if any.
+
+### A5. The finished reel and the post screen (beat B12, about 4 s)
+
+Steps:
+1. Same project as A4, finished. Start recording.
+2. Press play and let the reel play for 5 s in the Edits preview.
+3. Open the export or post screen and rest 3 s. **Don't press Post** unless you want to.
+4. Stop.
+
+- Recording: `E06_final_reel.mov`
+- Also export the finished reel itself from Edits as a video file: `E06_reel_export.mp4`. I play it inside the phone frame, which looks far better than a recording of a preview.
+- Screenshots: `E06_1_preview.png` (the preview playing) and `E06_2_post_screen.png`.
+
+---
+
+## Part B. DaVinci Resolve
+
+### B1. Resolve with a project open (beats B09 and B14, background behind the Terminal)
+
+Steps:
+1. Open Resolve, open the `Day 1 Demo` project. Stay on the **Edit** page (the tabs at the bottom of Resolve).
+2. Wait 2 s, take a screenshot. No recording needed.
+
+- Screenshot: `R00_resolve_project.png`
+
+### B2. Restart Resolve (beat B09 end, about 1 s, sped up)
+
+Steps:
+1. Resolve open with `Day 1 Demo`. Start recording.
+2. Press **Cmd+Q** to quit Resolve (confirm if it asks).
+3. Click Resolve in the Dock, wait for it to open, open `Day 1 Demo`.
+4. Wait 2 s, stop.
+
+- Recording: `R02_resolve_restart.mov`
+- Screenshots: not needed. I can use `R00_resolve_project.png` with a quick fade.
+
+### B3. Workspace > Scripts > Claude_MCP_Bridge (beat B10, about 4 s)
+
+Steps:
+1. Resolve open with `Day 1 Demo`. Start recording.
+2. Rest on **Workspace** in the top menu bar, click it, rest 1 s.
+3. Move down to **Scripts**, rest 1 s while the submenu opens.
+4. Move to **Claude_MCP_Bridge**, rest 1 s, click it.
+5. Wait 2 s, stop.
+
+- Recording: `R03_bridge_menu.mov`
+- Screenshots:
+  - `R03_1_workspace_menu.png`: the Workspace menu open.
+  - `R03_2_scripts_submenu.png`: the Scripts submenu open with Claude_MCP_Bridge visible.
+  - Tip: Cmd+Shift+3 works while a menu is open. If the menu closes, use Cmd+Shift+5 > Options > Timer 5 seconds, then open the menu and wait.
+
+### B4. Resolve doing the demo: import, timeline, render (beat B11 left side, about 6 s)
+
+Steps:
+1. Resolve open with `Day 1 Demo`, empty Media Pool, empty timeline. Start recording.
+2. In Claude Code, send:
+   `In Resolve, import everything in ~/Footage/day1, make a timeline called Day 1 and render it to ~/Exports.`
+3. Switch to Resolve and record the clips arriving in the Media Pool, the **Day 1** timeline being built, and the render running on the **Deliver** page until it shows complete.
+4. Wait 3 s, stop. 45 to 120 s raw is fine.
+
+- Recording: `R05_resolve_demo.mov`
+- Screenshots:
+  - `R05_1_empty.png`: empty project.
+  - `R05_2_media_pool.png`: clips in the Media Pool.
+  - `R05_3_timeline.png`: the Day 1 timeline built.
+  - `R05_4_rendering.png`: the render progress.
+  - `R05_5_done.png`: the render finished.
+
+### B5. A real blocking popup (beat B15, optional)
+
+Only if you can trigger one naturally (for example a "Save project?" or "Media offline" dialog).
+
+Steps:
+1. With the popup on screen, start recording, wait 2 s, rest on its button, click it to close it, wait 2 s, stop.
+
+- Recording: `X02_popup.mov`
+- Screenshot: `X02_1_popup.png`
+
+If you skip this, B15 keeps the clean illustrated popup card, marked as an illustration in REPORT.md.
+
+---
+
+## Part C. Both apps on one desktop (beats B01, B03, B04, B16: the opening and the end)
+
+This is the very first frame people see, so make it neat.
+
+Steps:
+1. Open Edits with the finished timeline from A4, and Resolve with the Day 1 timeline from B4.
+2. Place **Edits on the left half** of the screen and **Resolve on the right half**. They can overlap a little. Close everything else.
+3. Take a screenshot.
+4. Optional: record 5 s with the pointer resting still, as `D01_desktop_both.mov`.
+
+- Screenshot: `D01_desktop_both.png`
+- Extra screenshots:
+  - `D01_edits_only.png`: Edits alone, same window position.
+  - `D01_resolve_only.png`: Resolve alone, same window position.
+
+  These are for B03 and B04, where one app is highlighted at a time.
+
+---
+
+## Checklist
+
+Tick these off as you go. Recording or screenshots: either is fine for each line.
+
+| Done | Part | Recording | Or screenshots |
 |---|---|---|---|
-| E01 | `E01_edits_download.mov` | B05 (6 s) | Browser on the Edits for Mac download page, click Download. Then Edits open on the sign in screen, click **Sign in with Instagram**, end on the signed in Edits home. If you are already signed in, record the download page and Edits opening signed in |
-| E02 | `E02_edits_settings.mov` | B06 (7.6 s) | Edits open. Click Settings, click **Automation**, turn **Enable Automation Server** on, hover the **Copy** button for Claude Code for 2 s. The Access Token is on this screen: record it normally. I mask it from the first frame to the last, then OCR scan every frame |
-| E03 | `E03_edits_terminal.mov` | B07 (6.5 s) | Click **Copy** for Claude Code. Open Terminal, paste (Cmd+V), press Enter, wait for the output. Then fully quit Claude Desktop (Cmd+Q) and reopen it from the Dock. The pasted command can contain the token: I mask that line too |
-| E04 | `E04_edits_toolcheck.mov` | B08 (5.1 s) | In Claude Desktop, type `What tools does Edits have? Summarize them by category.`, press Enter, wait until the full list of tools is on screen, hold 3 s |
-| E05 | `E05_edits_timeline.mov` | B02 (5 s) and B11 (right half, 11.5 s) | In Claude, type the prompt below and send it. Then switch to Edits and record the timeline filling with clips, subtitles and music until it stops. 45 to 90 s raw is fine |
-| E06 | `E06_final_reel.mov` | B12 (3.8 s) | The finished reel playing in Edits for 5 s, then the export or post screen for 3 s. Do not press Post unless you want to |
-| R01 | `R01_resolve_commands.mov` | B09 (7.5 s) | Resolve open with a project. In Claude Code (Terminal), run the three commands one by one, waiting for each output: `/plugin marketplace add kingjamesch/davinci-resolve-mcp`, then `/plugin install davinci-resolve@davinci-resolve-mcp`, then `/davinci-resolve:setup` |
-| R02 | `R02_resolve_restart.mov` | B09 (end) | Quit Resolve (Cmd+Q), reopen it, open the same project |
-| R03 | `R03_bridge_menu.mov` | B10 (6.4 s) | In Resolve, click **Workspace** > **Scripts** > **Claude_MCP_Bridge**. Pause 1 s on each menu before moving on |
-| R04 | `R04_mcp_connected.mov` | B10 (end) | In Claude Code, type `/mcp`, press Enter, hold 3 s on the list showing **davinci** connected |
-| R05 | `R05_resolve_demo.mov` | B11 (left half, 11.5 s) | In Claude Code, type the Resolve prompt below and send it. Record Resolve importing the clips, building the Day 1 timeline and rendering to the end. 45 to 90 s raw is fine |
-| X01 | `X01_bridge_not_running.mov` | B14, optional | Only if it happens to you: the real "bridge is not running" message |
-| X02 | `X02_popup.mov` | B15, optional | Only if it happens to you: a Resolve popup that blocks the bridge, then you closing it |
+| [ ] | A1 Download and sign in | `E01_edits_download.mov` | `E01_1` to `E01_3` |
+| [ ] | A2 Settings, Automation | `E02_edits_settings.mov` | `E02_1` to `E02_4` |
+| [ ] | A3 Copy button | `E03_edits_copy.mov` | `E03_1`, `E03_2` |
+| [ ] | A4 Timeline filling | `E05_edits_timeline.mov` | `E05_1` to `E05_4` |
+| [ ] | A5 Finished reel | `E06_final_reel.mov` + `E06_reel_export.mp4` | `E06_1`, `E06_2` + `E06_reel_export.mp4` |
+| [ ] | B1 Resolve project | not needed | `R00_resolve_project.png` |
+| [ ] | B2 Restart | `R02_resolve_restart.mov` | not needed |
+| [ ] | B3 Bridge menu | `R03_bridge_menu.mov` | `R03_1`, `R03_2` |
+| [ ] | B4 Resolve demo | `R05_resolve_demo.mov` | `R05_1` to `R05_5` |
+| [ ] | B5 Popup (optional) | `X02_popup.mov` | `X02_1` |
+| [ ] | C Both apps | `D01_desktop_both.mov` (optional) | `D01_desktop_both.png`, `D01_edits_only.png`, `D01_resolve_only.png` |
+| [ ] | Your Resolve version number | | write it in your message |
 
-Prompts to type (they match the on screen text in the reel):
+## Export and send
 
-- **R05:** `In Resolve, import everything in ~/Footage/day1, make a timeline called Day 1 and render it to ~/Exports.`
-- **E05:** `In Edits, create a 9:16 vertical video under 45 seconds from the render in ~/Exports. Add subtitles at the bottom center and choose an upbeat track from the library.`
+1. **Recordings:** open each in QuickTime Player > **File > Export As > 1080p**. Keep the file names. This makes them small (about 20 to 80 MB each) and still sharp.
+2. **Screenshots:** send them as they are (PNG).
+3. Send everything **one of two ways**:
+   - **Google Drive:** a folder named `First_Video_recordings`. Tell me when it's there; I read it through the Drive connector.
+   - **GitHub:** the folder `First_Video/recordings/` on the branch `claude/dreamy-johnson-2s7i2c`. Each file must be under 100 MB.
+4. In your message, tell me:
+   - your Resolve version,
+   - whether to cover your Instagram handle,
+   - anything that looked different from this guide (menu names, button names). If the real app differs from the reel's overlays, the real app wins and I update the overlays.
 
-If Claude or the apps show different words, menu names or output than the reel expects, **that is fine**: the recording wins, and I update the overlays to match and list the differences in REPORT.md.
+## What I do next
 
-If X01 or X02 are missing, B14 and B15 keep their clean fix cards and are marked as illustrations in REPORT.md.
-
-## 4. Export and send
-
-1. Open each file in QuickTime Player > **File > Export As > 1080p**. This keeps the files small (about 20 to 80 MB each) and sharp enough for my 2x zoom.
-2. Keep the exact file names from the table (`.mov` is fine).
-3. Send them **one of two ways**:
-   - **GitHub:** put them in `First_Video/recordings/` on the branch `claude/dreamy-johnson-2s7i2c` and push. Each file must be under 100 MB.
-   - **Google Drive:** put them in a folder named `First_Video_recordings` and tell me. I can read it through the Drive connector.
-4. Optional: if you know where the token is on screen, add `recordings/masks.json` with the box in pixels, for example `{"E02": [[x, y, w, h]], "E03": [[x, y, w, h]]}`. If you don't, I find the boxes myself and show you stills before rendering.
-
-## 5. What I do when they arrive
-
-1. Check every file: length, resolution, the correct screens.
-2. Mask the token in E02 and E03 with a solid box from the first frame to the last, then OCR every frame. If any token is visible anywhere, I stop and tell you before exporting anything.
-3. Put each recording inside the MacBook frame (and the phone frame for E06). Add cursor follow zoom on each click, speed ramps on waits, and fit everything to the existing voice timing.
-4. Show you 12 stills for approval, then render the master, phone copy, no music version, teaser, srt and cover again, and rerun all gates.
+1. Check every file, then cover the Access Token (and your handle if you want) with solid boxes on every frame. I OCR every frame and stop before export if anything shows.
+2. Put your captures inside the MacBook frame (and the reel inside the phone frame). Add pointer, click and zoom effects where you used screenshots, and speed ramps where you recorded. Everything is fitted to the existing voice timing.
+3. Send you 12 stills to approve, then render all deliverables again and rerun every gate.
