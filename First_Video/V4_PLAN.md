@@ -71,11 +71,15 @@ Wait 2 s before you start and 2 s at the end. Move calmly. Rename each file exac
 | `W1_about_mac.mov` | Apple menu > About This Mac, rest on the chip line (M1, M2 or later) | 5 s |
 
 ### B. Phone screen recordings (Control Center > Screen Recording)
+**What these are for:** they show the viewer the *experience*, not proof. In the hook, a finished reel playing on a phone ("this is what you get"). In the CTA, someone typing EDIT and the guide arriving in their DMs ("this is what happens when you comment"). **Nothing needs to be posted first:**
+
 | File | Record exactly this | Length |
 |---|---|---|
-| `W5_reel_playing.mp4` | Instagram open on a finished reel you made with Edits, playing full screen | 8 s |
-| `W5_comment.mp4` | On any of your posts: tap comments, type `EDIT`, post it | 8 s |
-| `W5_dm.mp4` | The DM inbox with the guide message arriving or open (test it with a second account) | 6 s |
+| `W5_reel_playing.mp4` | Any reel or video you made with Edits (even the test video from your recordings), playing full screen **in the Edits app or the Photos app on your phone**. It doesn't need to be on Instagram | 8 s |
+| `W5_comment.mp4` | Open **any old post of yours**, tap comments, type `EDIT` slowly. You don't even have to post it: stop recording before you send. This only shows viewers what to do | 8 s |
+| `W5_dm.mp4` | Optional. From a second account (or a friend), send yourself the first DM text from DM_GUIDE.md, then record your inbox as it arrives and you open it | 6 s |
+
+If you skip any of these, I animate a clean phone mockup there instead: a reel playing, the comment typing in, the DM sliding up.
 
 ### C. Real world B-roll (film on your phone, vertical, 4K or 1080p, 5 to 10 s each)
 | File | Shot |
